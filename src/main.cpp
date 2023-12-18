@@ -6,5 +6,6 @@ int main(int argc, char const *argv[]) {
   auto const &sol = Solutions::getInstance(args);
 
   sol.runEntry(Year::y2023, Day::d01);
+  sol.runEntry(Year::y2023, Day::d02);
   return 0;
 }

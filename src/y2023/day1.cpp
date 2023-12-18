@@ -1,12 +1,10 @@
-#include "DailySetup.hpp"
-#include "Solutions.hpp"
-#include "FileParser.hpp"
+#include "EntryHeaders.hpp"
 #include <array>
 #include <cmath>
 #include <iostream>
 #include <limits>
 
-void solve(std::string path) {
+static void solve(std::string path) {
   FileParser fp(path);
   auto lines = fp.getLines();
 
