@@ -1,13 +1,13 @@
 #include "DailySetup.hpp"
+#include "Solutions.hpp"
 #include <FileParser.hpp>
-#include <Solutions.hpp>
 #include <array>
 #include <cmath>
 #include <iostream>
 #include <limits>
 
-void solve() {
-  FileParser fp("./puzzles/2023/01/main.txt");
+void solve(std::string path) {
+  FileParser fp(path);
   // FileParser fp("./puzzles/2023/01/sample.txt");
   auto lines = fp.getLines();
 
@@ -49,7 +49,7 @@ void solve() {
       here = line.find(DNAMES.at(i));
       if (here != std::string::npos && here < smallest) {
         smallest = here;
-        dig1 = i;
+        dig1 = static_cast<int>(i);
       }
       here = line.find(DNAMES.at(i));
       while (here != std::string::npos) {
@@ -58,7 +58,7 @@ void solve() {
       here = line.rfind(DNAMES.at(i));
       if (here != std::string::npos && here > largest) {
         largest = here;
-        dig2 = i;
+        dig2 = static_cast<int>(i);
       }
     }
     

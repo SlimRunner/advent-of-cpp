@@ -23,10 +23,14 @@ public:
   /// @return string of frist argument
   std::string findFirst(std::string flag);
 
+  bool findFirst(std::string flag, std::string & out);
+
   /// @brief get list of arguments of given flag
   /// @param flag argument flag to search for
   /// @return vector of arguments
   vecstring findParams(std::string flag);
+
+  bool findParams(std::string flag, vecstring & out);
 
   /// @brief determines if provided value exists as an argument flag
   /// @param flag argument flag to search for
@@ -36,6 +40,10 @@ public:
   /// @brief Determines the result of last search performed
   /// @return true if last search succeeded, false otherwise
   inline bool found() { return m_matched; };
+
+  /// @brief determines if underlying list is empty
+  /// @return true if list is empty, false otherwise
+  inline bool empty() const { return m_args.empty(); }
 };
 
 } // namespace System

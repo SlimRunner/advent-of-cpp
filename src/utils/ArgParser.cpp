@@ -26,11 +26,21 @@ std::string ArgParser::findFirst(std::string flag) {
   return std::string();
 }
 
+bool ArgParser::findFirst(std::string flag, std::string &out) {
+  out = findFirst(flag);
+  return m_matched;
+}
+
 vecstring ArgParser::findParams(std::string flag) {
   if (hasFlag(flag)) {
     return m_args.at(flag);
   }
   return vecstring();
+}
+
+bool ArgParser::findParams(std::string flag, vecstring &out) {
+  out = findParams(flag);
+  return m_matched;
 }
 
 bool ArgParser::hasFlag(std::string flag) {

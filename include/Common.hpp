@@ -1,12 +1,16 @@
 #pragma once
 
-using VoidFunc = void (*)();
+#include <string>
+
+using VoidFunc = void (*)(std::string path);
 
 enum class Year {
-  y2023
+  none = 0,
+  y2023 = 2023
 };
 
 enum class Day {
+  none = 0,
   d01,
   d02,
   d03,
@@ -33,3 +37,7 @@ enum class Day {
   d24,
   d25,
 };
+
+Year parseYear(std::string yearText);
+
+Day parseDay(std::string dayText);
