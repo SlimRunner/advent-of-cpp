@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <iomanip>
+#include <exception>
 
 std::string Solutions::rootPath = "";
 
@@ -47,6 +48,9 @@ Solutions &Solutions::getInstance(System::ArgParser args) {
 }
 
 void Solutions::addEntry(VoidFunc f, Year y, Day d) {
+  if (mFuncs.find({y, d}) != mFuncs.end()) {
+    throw std::logic_error("You are trying to enter the same entry twice");
+  }
   mFuncs.insert({{y, d}, f});
 }
 
