@@ -5,6 +5,6 @@ void solve(std::string path) {
   auto lines = fp.getLines();
 }
 
-void y2023d01(Solutions & sol) {
+void y2023d02(Solutions & sol) {
   sol.addEntry(solve, Year::y2023, Day::d01);
 }
