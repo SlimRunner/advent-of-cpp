@@ -6,7 +6,7 @@
 std::string Solutions::rootPath = "";
 
 Solutions::Solutions() : mFuncs{} {
-  y2023d01(*this);
+  collectSetups(*this);
 }
 
 Solutions &Solutions::getInstance() {

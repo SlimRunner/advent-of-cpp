@@ -1,6 +1,6 @@
 #include "DailySetup.hpp"
 #include "Solutions.hpp"
-#include <FileParser.hpp>
+#include "FileParser.hpp"
 #include <array>
 #include <cmath>
 #include <iostream>
@@ -8,7 +8,6 @@
 
 void solve(std::string path) {
   FileParser fp(path);
-  // FileParser fp("./puzzles/2023/01/sample.txt");
   auto lines = fp.getLines();
 
   // part 1
