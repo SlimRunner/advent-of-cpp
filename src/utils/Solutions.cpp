@@ -1,6 +1,7 @@
 #include "Solutions.hpp"
 #include "DailySetup.hpp"
 #include <sstream>
+#include <iostream>
 #include <iomanip>
 
 std::string Solutions::rootPath = "";
@@ -67,7 +68,7 @@ bool Solutions::runEntry(Year year, Day day, PuzzleChoice pc) const {
       fullpath << rootPath;
       fullpath << std::setw(0) << static_cast<int>(year) << "/";
       fullpath << std::setfill('0') << std::setw(2);
-      fullpath << static_cast<int>(day) << "/in.main.txt";
+      fullpath << static_cast<int>(day) << "/data.in.txt";
       subset.push_back({it->second, fullpath.str()});
     }
     
@@ -75,6 +76,14 @@ bool Solutions::runEntry(Year year, Day day, PuzzleChoice pc) const {
   case PuzzleChoice::RUN_ALL_INPUTS:
     break;
   case PuzzleChoice::RUN_EXAMPLE:
+    if (auto it = mFuncs.find({year, day}); it != mFuncs.end()) {
+      fullpath.clear();
+      fullpath << rootPath;
+      fullpath << std::setw(0) << static_cast<int>(year) << "/";
+      fullpath << std::setfill('0') << std::setw(2) << std::right;
+      fullpath << static_cast<int>(day) << "/data.ex.txt";
+      subset.push_back({it->second, fullpath.str()});
+    }
     break;
   case PuzzleChoice::RUN_ALL_EXAMPLES:
     break;
@@ -82,8 +91,16 @@ bool Solutions::runEntry(Year year, Day day, PuzzleChoice pc) const {
     break;
   }
 
+  std::stringstream mainMsg;
+  
+  mainMsg << "== Day " << static_cast<int>(day);
+  mainMsg << " Year " << static_cast<int>(year) << " ";
+  std::cout << std::setfill('=') << std::setw(50) << std::left << mainMsg.str();
+  std::cout << std::endl;
   for (auto const& fset: subset) {
+    std::cout << "File: " << fset.second << std::endl;
     fset.first(fset.second);
   }
+  std::cout << std::endl;
   return !subset.empty();
 }
