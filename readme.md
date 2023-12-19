@@ -1,11 +1,51 @@
-# AOC with CPP and Makefile
+# Advent of Code 2023
+## CPP and Makefile
 
 This setup is slightly cursed. Each day file is run from main and it is "linked" from Common.hpp by calling a setup function that must be manually furnished. Then the `solve` function of the day's file is accumulated in a Singleton that main has access to.
 
-# Notes
+## Daily Log
 
-1. Part 1 was uneventful. Part two would have been easy if I had not mistyped the number map as `0123459789`. It took me several hours to notice that I mistyped a 9 between 5 and 7. Other than that my approach of making a left and right search worked wonders.
+| # | Title | Stars | Difficulty | Quick notes |
+| - | - | - | - | ----- |
+| 1 | [Trebuchet?!](#day-1) | ⭐⭐ | easy | pay attention to hardcoded maps and lists |
+| 2 | [Cube Conundrum](#day-2) | ⭐⭐ | easy | be more careful of dangling references |
+| 3 | [Gear Ratios](#day-3) | ⭐⭐ | medium | unfamiliar terrain, used DFS |
 
-2. This whole day was easy since it was mostly finding a running max. I did have an issue related to C++ Regex that its matches and submatches create references to the searched string; a result, of that oversight on my part I was reading dangling references because I was clearing the stringstream the searches belonged to.
+<!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
-3. This was decently dificult for me which I am sure is reflected in the unsophisticated code that resulted. My approach is a multi step process where first I collect all the symbols into a stack. Then I run DFS on each symbol where only numbers and symbols themselves are valid. Then with the map of visited nodes I traverse again all the table and follow a push-and-flush approach to get the numbers (since they are all contiguous). Finally, for part two I use a hash map to identify the owner and counts of each of those numbers so I can use only those which have an asterisk as owner and have two siblings.
+
+## Extended Notes
+### Day 1
+#### Part 1
+* It went smoothly.
+* I used a normal LTR search iteratively to find the first and last item.
+
+#### Part 2
+* I got stuck in part 2 because I mistyped a map of numbers like this: `0123459789`. It took me several hours to notice that I mistyped a 9 between 5 and 7.
+* I realized that it was easier to use LTR search for the first number and RTL search to find the last item. I ran two sets of those for normal and spelled numbers separately.
+
+---
+### Day 2
+#### Part 1
+* It did not go smoothly because of skill issues with the STL. The challenge itself was easy.
+  * I misinterpreted what std::regex_search did in the background, so I deleted the string used for the search before reading the results which resulted in reading dangling references.
+* I used a linear search to find cube counts which surpassed the prescribed amounts and accumulated their day values on the go.
+
+#### Part 2
+* It went smoothly.
+* Edited code from part 1 to also find the running max of each day by color and operate them as prescribed in the challenge.
+
+---
+### Day 3
+#### Part 1
+* This was fairly difficult. I was unfamiliar with the shape of the problem which was reflected in the unsophisticated code that resulted.
+* My approach was a multi step process. First, I hardcoded all the symbols in a list and traversed the grid to store their location in a stack. Then, I used that stack to run DFS on the location of each symbol where symbols added all their neighbors and numbers only their left and right. Finally, with the map of visited nodes I traversed the grid once more to get the numbers with a push-and-flush approach.
+
+#### Part 2
+* It was easier since my code from part one provided a backbone to solve this one much faster.
+* I decided to extend my code from part one to identify the "owner" of each part number found above during the DFS. This way I was able to insert these numbers into a hash map and easily add only the ones whose owner was an asterisk and had two siblings.
+
+<!-- ---
+### Day \#
+#### Part 1
+#### Part 2 -->
