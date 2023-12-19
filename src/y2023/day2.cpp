@@ -73,7 +73,7 @@ static void solve(std::string path) {
   FileParser fp(path);
   auto lines = fp.getLines();
   
-  // assume the input always have indices in order and contigouous
+  // assume the input always have indices in order and contiguous
 
   std::vector<std::vector<Cubes>> games;
   const Cubes MAX_P1 = {12, 13, 14};

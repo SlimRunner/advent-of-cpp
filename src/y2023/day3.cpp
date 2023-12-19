@@ -97,16 +97,6 @@ void solve(std::string path) {
     }
   }
 
-  // run DFS on all 8 adjacent squares for all symbols
-  // then all subsequent DFS are only left-right
-  // collect all the branches in a deque in the proper order
-  // join into a string and parse to int
-  // add those numbers
-  // for (auto const& a: symStack) {
-  //   std::cout << At(charMap, a);
-  // }
-  // std::cout << std::endl;
-
   while (symStack.size()) {
     auto const here = symStack.back();
     symStack.pop_back();
