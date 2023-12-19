@@ -1,6 +1,5 @@
 #include "EntryHeaders.hpp"
 
-#include <iostream>
 #include <iterator>
 #include <regex>
 #include <sstream>

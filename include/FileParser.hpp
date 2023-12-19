@@ -11,4 +11,5 @@ public:
   FileParser(std::string);
 
   std::vector<std::string> getLines();
+  std::string getText();
 };

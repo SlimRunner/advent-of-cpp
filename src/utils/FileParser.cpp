@@ -29,3 +29,10 @@ std::vector<std::string> FileParser::getLines() {
 
   return output;
 }
+
+std::string FileParser::getText() {
+  std::ifstream infile(mPath);
+  std::stringstream fstr;
+  fstr << infile.rdbuf();
+  return fstr.str();
+}
