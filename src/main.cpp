@@ -9,6 +9,5 @@ int main(int argc, char const *argv[]) {
   // sol.runEntry(Year::y2023, Day::d01, PuzzleChoice::RUN_INPUT);
   // sol.runEntry(Year::y2023, Day::d02, PuzzleChoice::RUN_INPUT);
   sol.runEntry(Year::y2023, Day::d03, PuzzleChoice::RUN_INPUT);
-  std::cout << std::endl;
   return 0;
 }
