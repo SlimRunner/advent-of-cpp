@@ -69,6 +69,7 @@ bool Solutions::runEntry(Year year, Day day, PuzzleChoice pc) const {
   case PuzzleChoice::RUN_INPUT:
     if (auto it = mFuncs.find({year, day}); it != mFuncs.end()) {
       fullpath.clear();
+      fullpath.str("");
       fullpath << rootPath;
       fullpath << std::setw(0) << static_cast<int>(year) << "/";
       fullpath << std::setfill('0') << std::setw(2);
@@ -82,6 +83,7 @@ bool Solutions::runEntry(Year year, Day day, PuzzleChoice pc) const {
   case PuzzleChoice::RUN_EXAMPLE:
     if (auto it = mFuncs.find({year, day}); it != mFuncs.end()) {
       fullpath.clear();
+      fullpath.str("");
       fullpath << rootPath;
       fullpath << std::setw(0) << static_cast<int>(year) << "/";
       fullpath << std::setfill('0') << std::setw(2) << std::right;
