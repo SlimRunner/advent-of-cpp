@@ -43,6 +43,7 @@ Grid operator+(const Grid &lhs, const Grid &rhs) {
   return result;
 }
 
+[[maybe_unused]]
 Grid operator-(const Grid &lhs, const Grid &rhs) {
   Grid result = lhs;
   result -= rhs;
