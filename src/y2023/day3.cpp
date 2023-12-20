@@ -4,6 +4,8 @@
 #include <sstream>
 #include <vector>
 
+namespace {
+
 struct Grid {
   int row;
   int col;
@@ -203,6 +205,8 @@ void solve(std::string path) {
 
   std::cout << "P2: " << total2 << std::endl;
 }
+
+} // anon namespace
 
 void y2023d03(Solutions & sol) {
   sol.addEntry(solve, Year::y2023, Day::d03);

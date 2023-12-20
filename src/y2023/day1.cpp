@@ -4,7 +4,9 @@
 #include <iostream>
 #include <limits>
 
-static void solve(std::string path) {
+namespace {
+
+void solve(std::string path) {
   FileParser fp(path);
   auto lines = fp.getLines();
 
@@ -77,6 +79,8 @@ static void solve(std::string path) {
   goddammit I was checking against 0123459789 (not the 9 in place of 6)
   */
 }
+
+} // anon namespace
 
 void y2023d01(Solutions & sol) {
   sol.addEntry(solve, Year::y2023, Day::d01);

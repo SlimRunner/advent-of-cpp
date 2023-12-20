@@ -4,6 +4,8 @@
 #include <regex>
 #include <sstream>
 
+namespace {
+
 struct Cubes {
   int red = 0;
   int green = 0;
@@ -26,7 +28,7 @@ Cubes max(const Cubes & lhs, const Cubes & rhs) {
   return cb;
 }
 
-static void parseInput(
+void parseInput(
   const std::vector<std::string> & lines,
   std::vector<std::vector<Cubes>> & games
 ) {
@@ -69,7 +71,7 @@ static void parseInput(
   }
 }
 
-static void solve(std::string path) {
+void solve(std::string path) {
   FileParser fp(path);
   auto lines = fp.getLines();
   
@@ -97,6 +99,8 @@ static void solve(std::string path) {
   std::cout << "P1: " << gameScore << std::endl;
   std::cout << "P2: " << cubePow << std::endl;
 }
+
+} // anon namespace
 
 void y2023d02(Solutions & sol) {
   sol.addEntry(solve, Year::y2023, Day::d02);
