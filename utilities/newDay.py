@@ -1,16 +1,15 @@
 # outline
 '''
 TODO:
-  * add a new file by providing a year and day
+  * provide list to choose a year and day
     * read all the y20xx files within src and list them as options
     * similarly read all files within that folder to list missing days
-  * add the file and the boiler plate (listing 1)
+  * add the file and its boilerplate (listing 1)
     * substitute the # with the appropriate number
   * rewrite DailySetup.hpp and DailySetup.cpp using templates
-    * to make this easier do not edit the fails but do a complete
-      rewrite in accordance with listings 2 and 3. However, do make
+    * to make this easier do not edit the files but do a complete
+      rewrite in accordance with listings 2 and 3. However, make it
       clear that those files are not to be edited manually!
-  * DO NOT EDIT MAIN AS IT IS UNDER CONSTRUCTION STILL
 '''
 
 # listing 1
