@@ -10,6 +10,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 1 | [Trebuchet?!](#day-1) | ⭐⭐ | easy | pay attention to hardcoded maps and lists |
 | 2 | [Cube Conundrum](#day-2) | ⭐⭐ | easy | be more careful of dangling references |
 | 3 | [Gear Ratios](#day-3) | ⭐⭐ | medium | unfamiliar terrain, used DFS |
+| 4 | [Scratchcards](#day-4) | ⭐ | Difficulty | Quick notes |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -44,6 +45,13 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 #### Part 2
 * It was easier since my code from part one provided a backbone to solve this one much faster.
 * I decided to extend my code from part one to identify the "owner" of each part number found above during the DFS. This way I was able to insert these numbers into a hash map and easily add only the ones whose owner was an asterisk and had two siblings.
+
+---
+### Day 4
+#### Part 1
+* It went smoothly.
+* I turned the winning numbers into a set and simply queried them against the lotto numbers. If they existed, count them.
+#### Part 2
 
 <!-- ---
 ### Day \#
