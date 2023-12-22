@@ -80,6 +80,7 @@ void solve(std::string path) {
     charMap.push_back({});
     visitMap.push_back({});
     ownerMap.push_back({});
+    
     for (auto const & chr: line) {
       charMap.back().push_back(chr);
       visitMap.back().push_back(false);
@@ -100,6 +101,7 @@ void solve(std::string path) {
     }
   }
 
+  // DFS but symbols explore all around while numbers only left and right
   while (symStack.size()) {
     auto const here = symStack.back();
     symStack.pop_back();
@@ -116,7 +118,6 @@ void solve(std::string path) {
     
     auto chr = At(charMap, here);
     if (!std::isdigit(chr)) {
-      // add left and right to stack
       std::array<Grid, 8> adjacent = {{
           {-1, 1, here.hash},
           {-1, 0, here.hash},
@@ -127,6 +128,7 @@ void solve(std::string path) {
           {1, 1, here.hash},
           {0, 1, here.hash},
       }};
+      
       for (auto const & move: adjacent) {
         Grid there = here + move;
         if (there.boundCheck(LOWER_BOUND, UPPER_BOUND) && !At(visitMap, there)) {
@@ -134,11 +136,11 @@ void solve(std::string path) {
         }
       }
     } else {
-      // add all adjacent to stack
       std::array<Grid, 2> nline = {{
           {0, -1, here.hash},
           {0, 1, here.hash},
       }};
+
       for (auto const & move: nline) {
         Grid there = here + move;
         if (there.boundCheck(LOWER_BOUND, UPPER_BOUND) && !At(visitMap, there)) {
@@ -163,6 +165,7 @@ void solve(std::string path) {
         ++bufferSize;
       } else if (bufferSize > 0) {
         const int partNo = std::stoi(buffer.str());
+
         if (partNums.find(ownerID) == partNums.end()) {
           partNums.emplace(ownerID, partNo);
           partCount.emplace(ownerID, 1);
@@ -177,6 +180,7 @@ void solve(std::string path) {
           partNums.at(ownerID) += partNo;
           ++partCount.at(ownerID);
         }
+
         total1 += partNo;
         buffer.clear();
         buffer.str("");
@@ -186,9 +190,11 @@ void solve(std::string path) {
   }
   if (bufferSize > 0) {
     const int partNo = std::stoi(buffer.str());
+
     if (partNums.find(ownerID) == partNums.end()) {
       partNums.emplace(ownerID, partNo);
     }
+
     total1 += partNo;
     buffer.clear();
     buffer.str("");
@@ -199,6 +205,7 @@ void solve(std::string path) {
   int total2 = 0;
   for (auto const & kv: partNums) {
     const char chr = At(charMap, Grid::getFromHash(kv.first, INT_W));
+    
     if (chr == '*' && partCount.at(kv.first) == 2) {
       total2 += kv.second;
     }

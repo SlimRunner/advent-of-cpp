@@ -13,6 +13,7 @@ void solve(std::string path) {
   // part 1
   char chr1, chr2;
   int total1 = 0;
+
   for(auto const & line:lines) {
     bool first = true;
     for (auto const & letter: line) {
@@ -29,6 +30,7 @@ void solve(std::string path) {
     }
     total1 += static_cast<int>(chr1 - '0') * 10 + static_cast<int>(chr2 - '0');
   }
+  
   std::cout << "P1: ";
   std::cout << total1 << std::endl;
 
@@ -44,16 +46,14 @@ void solve(std::string path) {
     size_t smallest = std::numeric_limits<size_t>::max();
     size_t largest = std::numeric_limits<size_t>::min();
     size_t here;
+
     for (size_t i = 1; i < DNAME_SIZE; ++i) {
       here = line.find(DNAMES.at(i));
       if (here != std::string::npos && here < smallest) {
         smallest = here;
         dig1 = static_cast<int>(i);
       }
-      here = line.find(DNAMES.at(i));
-      while (here != std::string::npos) {
-        here = line.find(DNAMES.at(i), here + 1);
-      }
+
       here = line.rfind(DNAMES.at(i));
       if (here != std::string::npos && here > largest) {
         largest = here;
@@ -65,6 +65,7 @@ void solve(std::string path) {
     if (here != std::string::npos && here <= smallest) {
       dig1 = std::stoi(line.substr(here, 1));
     }
+
     here = line.find_last_of("0123456789");
     if (here != std::string::npos && here >= largest) {
       dig2 = std::stoi(line.substr(here, 1));
@@ -75,9 +76,6 @@ void solve(std::string path) {
 
   std::cout << "P2: ";
   std::cout << total2 << std::endl;
-  /*
-  goddammit I was checking against 0123459789 (not the 9 in place of 6)
-  */
 }
 
 } // anon namespace
