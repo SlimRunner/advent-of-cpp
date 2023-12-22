@@ -1,5 +1,6 @@
 #include "EntryHeaders.hpp"
 #include "StringUtils.hpp"
+#include <algorithm>
 
 namespace {
 
@@ -9,32 +10,41 @@ void solve(std::string path) {
   auto line = lines.cbegin();
   auto const EOL = lines.cend();
 
-  std::vector<std::vector<std::vector<long long>>> maps;
+  std::vector<std::vector<std::vector<long long>>> almanac;
 
-  auto seeds = parseLL(stringAfter(*(line++), ':'));
+  auto const seeds = parseLL(stringAfter(*(line++), ':'));
+  auto params{seeds};
   while (line != EOL && line->size() == 0) {++line;}
   if (line != EOL) ++line;
   
   while (line != EOL) {
-    maps.push_back({});
+    almanac.push_back({});
     while (line != EOL && line->size() > 0) {
-      maps.back().push_back(parseLL(stringAfter(*line++, ':')));
+      almanac.back().push_back(parseLL(stringAfter(*line++, ':')));
     }
     while (line != EOL && line->size() == 0) {++line;}
     if (line != EOL) ++line;
   }
 
-  for (auto i: maps) {
-    for (auto j: i) {
-      for (auto k: j) {
-        std::cout << k << " " << std::flush;
+  for (auto && param: params) {
+    for (auto const & maps: almanac) {
+      for (auto const & map: maps) {
+        auto const range = param - map.at(1);
+        if (range >= 0 && range < map.at(2)) {
+          auto const delta = map.at(0) - map.at(1);
+          param += delta;
+          break;
+        }
       }
-      std::cout << std::endl;
     }
-    std::cout << std::endl;
   }
 
-  std::cout << "P1: " << std::endl;
+  long long minParam = -1LL;
+  if (auto it = std::min_element(params.begin(), params.end()); it != params.end()) {
+    minParam = *it;
+  }
+
+  std::cout << "P1: " << minParam << std::endl;
 }
 
 } // anon namespace
