@@ -12,7 +12,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 3 | [Gear Ratios](#day-3) | ⭐⭐ | medium | unfamiliar terrain, used DFS |
 | 4 | [Scratchcards](#day-4) | ⭐⭐ | easy | please pay attention to where you advance your pointers samir |
 | 5 | [If You Give A Seed A Fertilizer](#day-5) | ⭐ | hard |  |
-| 6 | [Wait For It](#day-6) |  |  |  |
+| 6 | [Wait For It](#day-6) | ⭐⭐ | easy | this was basically a math problem |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -60,16 +60,20 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 ---
 ### Day 5
 #### Part 1
-  * It went smoothly.
-  * Simply brute forced the almanac to get the smallest seed value.
+* It went smoothly.
+* Simply brute forced the almanac to get the smallest seed value.
 #### Part 2 (missing)
-  * Oh boy.
-  * I should have realized where this was going when my brute force approach scalated to O(n<sup>3</sup>).
+* Oh boy.
+* I should have realized where this was going when my brute force approach scalated to O(n<sup>3</sup>).
 
 ---
 ### Day 6
 #### Part 1
+* It went smoothly.
+* I simply solved the math for when the all the output times are equal to the record time. Basically the zeroes of a quadratic equation.
 #### Part 2
+* It went smoothly.
+* I added an alternative parsing to ignore spaces and repeated the same process from 1. Runs in O(1).
 
 <!-- ---
 ### Day \#
