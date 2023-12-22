@@ -10,7 +10,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 1 | [Trebuchet?!](#day-1) | ⭐⭐ | easy | pay attention to hardcoded maps and lists |
 | 2 | [Cube Conundrum](#day-2) | ⭐⭐ | easy | be more careful of dangling references |
 | 3 | [Gear Ratios](#day-3) | ⭐⭐ | medium | unfamiliar terrain, used DFS |
-| 4 | [Scratchcards](#day-4) | ⭐ | Difficulty | Quick notes |
+| 4 | [Scratchcards](#day-4) | ⭐⭐ | easy | please pay attention to where you advance your pointers samir |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -52,6 +52,8 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 * It went smoothly.
 * I turned the winning numbers into a set and simply queried them against the lotto numbers. If they existed, count them.
 #### Part 2
+* It went smoothly.
+* I did a small refactor to include a per card counter which was used to accumulate the number of winning numbers times the appropriate count of cards.
 
 <!-- ---
 ### Day \#

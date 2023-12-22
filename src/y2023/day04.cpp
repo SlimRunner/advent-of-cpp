@@ -2,8 +2,8 @@
 #include "StringUtils.hpp"
 
 #include <set>
-#include <map>
 #include <algorithm>
+#include <cassert>
 
 namespace {
 
@@ -13,6 +13,7 @@ void solve(std::string path) {
 
   std::vector<std::vector<int>> lottoNums;
   std::vector<std::vector<int>> winNums;
+  std::vector<int> cardCount(lines.size());
 
   // parse input to be more tractable
   for (auto const & line: lines) {
@@ -20,23 +21,33 @@ void solve(std::string path) {
     winNums.push_back(parseInts(stringAfter(line, '|')));
   }
 
-  int total = 0;
+  int points = 0;
+  int cards = 0;
+  auto countIt = cardCount.begin();
+
   for (
     auto lotIt = lottoNums.cbegin(), winIt = winNums.cbegin();
     lotIt != lottoNums.cend() || winIt != winNums.cend();
-    ++lotIt, ++winIt
+    ++lotIt, ++winIt, ++countIt
   ) {
     std::set<int> winKeys(winIt->begin(), winIt->end());
     int pow = 1;
+
+    *countIt += 1;
+    cards += (*countIt);
+    auto forwardIt = countIt;
+
     for (auto const & num: *lotIt) {
       if (winKeys.find(num) != winKeys.end()) {
+        *(++forwardIt) += (*countIt);
         pow *= 2;
       }
     }
-    total += pow / 2;
+    points += pow / 2;
   }
 
-  std::cout << "P1: " << total << std::endl;
+  std::cout << "P1: " << points << std::endl;
+  std::cout << "P2: " << cards << std::endl;
 }
 
 } // anon namespace
