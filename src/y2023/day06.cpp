@@ -6,15 +6,20 @@
 
 namespace {
 
+template <typename T>
 struct Race {
-  int time;
-  int dist;
+  T time;
+  T dist;
 };
 
-std::vector<Race> getRaces(const std::string & path);
+std::vector<Race<int>> getRaces(const System::vecstring & lines);
+Race<long long> getTheRace(const System::vecstring & lines);
 
 void solve(std::string path) {
-  auto races = getRaces(path);
+  FileParser fp(path);
+  auto lines = fp.getLines();
+  auto races = getRaces(lines);
+
   // a = 1 mm/(ms^2)
   // 'a' builds-up and increases at once, so assume a running start that counts
   // distance only once you let go off the accelerator
@@ -40,7 +45,6 @@ void solve(std::string path) {
   //     th = (1/2) * (tt -+ sqrt(tt^2 - 4 * dr))
   // 1-> th = (1/2) * (tt - sqrt(tt^2 - 4 * dr))
   // 2-> th = (1/2) * (tt + sqrt(tt^2 - 4 * dr))
-  // integer range is from ceil(th[1]) to floor(th[2])
 
   int timeProducts = 1;
 
@@ -52,24 +56,44 @@ void solve(std::string path) {
   }
 
   std::cout << "P1: " << timeProducts << std::endl;
+
+  auto theRace = getTheRace(lines);
+  (void)theRace;
+  auto const SQ = std::sqrt(theRace.time * theRace.time - 4 * theRace.dist);
+  auto from = static_cast<int>(std::floor(0.5 * (theRace.time - SQ))) + 1;
+  auto to   = static_cast<int>(std:: ceil(0.5 * (theRace.time + SQ))) - 1;
+  auto result = to - from + 1;
+
+  std::cout << "P2: " << result << std::endl;
 }
 
-std::vector<Race> getRaces(const std::string & path) {
-  FileParser fp(path);
-  auto lines = fp.getLines();
+std::vector<Race<int>> getRaces(const System::vecstring & lines) {
   auto times = parseInts(stringAfter(lines.at(0), ':'));
   auto dists = parseInts(stringAfter(lines.at(1), ':'));
   if (times.size() != dists.size()) {
     throw std::length_error("times and distances must be equal");
   }
-  std::vector<Race> races;
+  std::vector<Race<int>> races;
   std::transform(
     times.begin(), times.end(), dists.begin(),
     std::back_inserter(races),
-    [](const auto &t, const auto &d) { return Race{t, d}; }
+    [](int t, int d) { return Race<int>{t, d}; }
   );
 
   return races;
+}
+
+Race<long long> getTheRace(const System::vecstring & lines) {
+  auto times = parseLL(stringAfter(lines.at(0), ':'), ' ');
+  auto dists = parseLL(stringAfter(lines.at(1), ':'), ' ');
+  if (times.size() != dists.size()) {
+    throw std::length_error("times and distances must be equal");
+  }
+  if (times.size() != 1) {
+    throw std::length_error("times and distances have a size of 1");
+  }
+
+  return Race<long long>{times.at(0), dists.at(0)};
 }
 
 } // anon namespace
