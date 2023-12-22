@@ -1,8 +1,34 @@
 #include "EntryHeaders.hpp"
 #include "StringUtils.hpp"
 #include <algorithm>
+#include <utility>
+#include <exception>
+#include <limits>
 
 namespace {
+
+template <typename T>
+struct Range {
+  T from;
+  T to;
+};
+
+template <typename T>
+struct AlmanacEntry {
+  T destStart;
+  T sourceStart;
+  T rangeSpan;
+
+  AlmanacEntry(std::vector<T> values) {
+    if (values.size() != 3) {
+      throw std::invalid_argument("An almanac entry must be of size 3.");
+    } else {
+      destStart = values.at(0);
+      sourceStart = values.at(1);
+      rangeSpan = values.at(2);
+    }
+  }
+};
 
 void solve(std::string path) {
   FileParser fp(path);
@@ -10,7 +36,7 @@ void solve(std::string path) {
   auto line = lines.cbegin();
   auto const EOL = lines.cend();
 
-  std::vector<std::vector<std::vector<long long>>> almanac;
+  std::vector<std::vector<AlmanacEntry<long long>>> almanac;
 
   auto const seeds = parseLL(stringAfter(*(line++), ':'));
   auto params{seeds};
@@ -29,9 +55,9 @@ void solve(std::string path) {
   for (auto && param: params) {
     for (auto const & maps: almanac) {
       for (auto const & map: maps) {
-        auto const range = param - map.at(1);
-        if (range >= 0 && range < map.at(2)) {
-          auto const delta = map.at(0) - map.at(1);
+        auto const offset = param - map.sourceStart;
+        if (offset >= 0 && offset < map.rangeSpan) {
+          auto const delta = map.destStart - map.sourceStart;
           param += delta;
           break;
         }
@@ -45,6 +71,38 @@ void solve(std::string path) {
   }
 
   std::cout << "P1: " << minParam << std::endl;
+
+  std::vector<Range<long long>> seedRanges;
+  for (auto it = seeds.begin(); it != seeds.end(); it += 2) {
+    seedRanges.push_back({*it, *it + *(it + 1) - 1});
+  }
+  long long smallest = std::numeric_limits<long long>().max();
+
+  // this is a probably going to take until the heat death of the universe
+  // I have an idea
+  // compute the piecewise in reverse from the lowest possible value
+  // until both the value is possible and is within any of the ranges of seeds
+  for (auto const & seedRange: seedRanges) {
+    for (long long i = seedRange.from; i <= seedRange.to; ++i) {
+      auto param = i;
+      for (auto const &maps : almanac) {
+        for (auto const &map : maps) {
+          auto const offset = param - map.sourceStart;
+          if (offset >= 0 && offset < map.rangeSpan) {
+            auto const delta = map.destStart - map.sourceStart;
+            param += delta;
+            break;
+          }
+        }
+      }
+
+      if (smallest > param) {
+        smallest = param;
+      }
+    }
+  }
+
+  std::cout << "P2: " << smallest << std::endl;
 }
 
 } // anon namespace
