@@ -128,7 +128,7 @@ void y{year}d{day:02}(Solutions & sol) {{
 '''
 
 def getHeaderSetup(prototypes):
-  prototypes = '\n  '.join(prototypes)
+  prototypes = '\n'.join(prototypes)
   return f'''\
 // automatically generated
 // DO NOT EDIT
