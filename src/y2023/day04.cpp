@@ -3,7 +3,6 @@
 
 #include <set>
 #include <algorithm>
-#include <cassert>
 
 namespace {
 
