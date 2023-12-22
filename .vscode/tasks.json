@@ -6,6 +6,12 @@
 			"label": "Debug",
 			"command": "make debug",
 			"detail": "Compile debug with makefile"
+		},
+		{
+			"type": "shell",
+			"label": "Add New",
+			"command": "./utilities/newDay.py",
+			"detail": "Add boilerplate to configure a new daily challenge"
 		}
 	]
 }
