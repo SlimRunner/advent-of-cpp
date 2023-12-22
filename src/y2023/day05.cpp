@@ -9,19 +9,19 @@ void solve(std::string path) {
   auto line = lines.cbegin();
   auto const EOL = lines.cend();
 
-  std::vector<std::vector<std::vector<int>>> maps;
+  std::vector<std::vector<std::vector<long long>>> maps;
 
-  auto seeds = parseInts(stringAfter(*(line++), ':'));
-  while (line != EOL && (line)->size() == 0) {line++;}
-  if (line != EOL) line++;
+  auto seeds = parseLL(stringAfter(*(line++), ':'));
+  while (line != EOL && line->size() == 0) {++line;}
+  if (line != EOL) ++line;
   
   while (line != EOL) {
     maps.push_back({});
-    while (line != EOL && (line)->size() > 0) {
-      maps.back().push_back(parseInts(stringAfter(*line++, ':')));
+    while (line != EOL && line->size() > 0) {
+      maps.back().push_back(parseLL(stringAfter(*line++, ':')));
     }
-    while (line != EOL && (line)->size() == 0) {line++;}
-    if (line != EOL) line++;
+    while (line != EOL && line->size() == 0) {++line;}
+    if (line != EOL) ++line;
   }
 
   for (auto i: maps) {

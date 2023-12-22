@@ -33,17 +33,18 @@ std::string stringAfter(const std::string & src, char start) {
   }
 }
 
-std::vector<int> parseInts(const std::string & src) {
-  std::vector<int> result;
+template <typename T>
+std::vector<T> parseNums(const std::string & src, T (*parser)(const std::string &, size_t *, int)) {
+  std::vector<T> result;
   std::stringstream buffer;
   bool enableBuffer = false;
-
+  
   for (auto const & chr: src) {
     if (std::isdigit(chr)) {
       buffer << chr;
       enableBuffer = true;
     } else if (enableBuffer) {
-      result.push_back(std::stoi(buffer.str()));
+      result.push_back(parser(buffer.str(), (size_t *)nullptr, 10));
       buffer.clear();
       buffer.str("");
       enableBuffer = false;
@@ -51,8 +52,20 @@ std::vector<int> parseInts(const std::string & src) {
   }
 
   if (enableBuffer) {
-    result.push_back(std::stoi(buffer.str()));
+    result.push_back(parser(buffer.str(), (size_t *)nullptr, 10));
   }
 
   return result;
+}
+
+std::vector<int> parseInts(const std::string & src) {
+  return parseNums(src, std::stoi);
+}
+
+std::vector<long> parseLongs(const std::string & src) {
+  return parseNums(src, std::stol);
+}
+
+std::vector<long long> parseLL(const std::string & src) {
+  return parseNums(src, std::stoll);
 }
