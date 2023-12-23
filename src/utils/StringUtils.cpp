@@ -99,10 +99,10 @@ std::vector<long> parseLongs(const std::string & src, char skipChar) {
   return parseNums(src, skipChar, std::stol);
 }
 
-std::vector<long long> parseLL(const std::string & src) {
+std::vector<long long> parseLLs(const std::string & src) {
   return parseNums(src, std::stoll);
 }
 
-std::vector<long long> parseLL(const std::string & src, char skipChar) {
+std::vector<long long> parseLLs(const std::string & src, char skipChar) {
   return parseNums(src, skipChar, std::stoll);
 }

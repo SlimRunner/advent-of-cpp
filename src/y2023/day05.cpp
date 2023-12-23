@@ -38,7 +38,7 @@ void solve(std::string path) {
 
   std::vector<std::vector<AlmanacEntry<long long>>> almanac;
 
-  auto const seeds = parseLL(stringAfter(*(line++), ':'));
+  auto const seeds = parseLLs(stringAfter(*(line++), ':'));
   auto params{seeds};
   while (line != EOL && line->size() == 0) {++line;}
   if (line != EOL) ++line;
@@ -46,7 +46,7 @@ void solve(std::string path) {
   while (line != EOL) {
     almanac.push_back({});
     while (line != EOL && line->size() > 0) {
-      almanac.back().push_back(parseLL(stringAfter(*line++, ':')));
+      almanac.back().push_back(parseLLs(stringAfter(*line++, ':')));
     }
     while (line != EOL && line->size() == 0) {++line;}
     if (line != EOL) ++line;

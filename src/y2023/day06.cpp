@@ -57,8 +57,8 @@ std::vector<Race<int>> getRaces(const System::vecstring & lines) {
 }
 
 Race<long long> getTheRace(const System::vecstring & lines) {
-  auto times = parseLL(stringAfter(lines.at(0), ':'), ' ');
-  auto dists = parseLL(stringAfter(lines.at(1), ':'), ' ');
+  auto times = parseLLs(stringAfter(lines.at(0), ':'), ' ');
+  auto dists = parseLLs(stringAfter(lines.at(1), ':'), ' ');
   if (times.size() != dists.size()) {
     throw std::length_error("times and distances must be equal");
   }
