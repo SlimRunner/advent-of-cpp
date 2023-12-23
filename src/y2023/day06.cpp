@@ -20,51 +20,24 @@ void solve(std::string path) {
   auto lines = fp.getLines();
   auto races = getRaces(lines);
 
-  // a = 1 mm/(ms^2)
-  // 'a' builds-up and increases at once, so assume a running start that counts
-  // distance only once you let go off the accelerator
-  // tt: time total (given)
-  // dr: record distance (given)
-  // th: time holding accelerator (independent)
-  // th <= tt
-  // tr: time remaining
-  // tr = tt - th
-  // v0 = th * a
-
-  // d(th): distance traveled
-  // d(th) = tr * v0 = tr * th * a
-  //       = tr * th = (tt - th) * th
-  //       = tt * th - th^2
-  // distance-record difference
-  // d(th) - dr
-  // find 0 crossings
-  // ->  0  = d(th) - dr
-  //     0  = tt * th - th^2 - dr
-  // quad formula: a = -1, b = tt, c = -dr
-  // ->  th = -(1/2) * (-tt +- sqrt(tt^2 - 4 * -1 * -dr))
-  //     th = (1/2) * (tt -+ sqrt(tt^2 - 4 * dr))
-  // 1-> th = (1/2) * (tt - sqrt(tt^2 - 4 * dr))
-  // 2-> th = (1/2) * (tt + sqrt(tt^2 - 4 * dr))
-
-  int timeProducts = 1;
+  int prodOfTimes = 1;
 
   for (auto const & race: races) {
     auto const SQ = std::sqrt(race.time * race.time - 4 * race.dist);
     auto from = static_cast<int>(std::floor(0.5 * (race.time - SQ))) + 1;
     auto to   = static_cast<int>(std:: ceil(0.5 * (race.time + SQ))) - 1;
-    timeProducts *= to - from + 1;
+    prodOfTimes *= to - from + 1;
   }
 
-  std::cout << "P1: " << timeProducts << std::endl;
+  std::cout << "P1: " << prodOfTimes << std::endl;
 
   auto theRace = getTheRace(lines);
-  (void)theRace;
   auto const SQ = std::sqrt(theRace.time * theRace.time - 4 * theRace.dist);
   auto from = static_cast<int>(std::floor(0.5 * (theRace.time - SQ))) + 1;
   auto to   = static_cast<int>(std:: ceil(0.5 * (theRace.time + SQ))) - 1;
-  auto result = to - from + 1;
+  auto winningMatches = to - from + 1;
 
-  std::cout << "P2: " << result << std::endl;
+  std::cout << "P2: " << winningMatches << std::endl;
 }
 
 std::vector<Race<int>> getRaces(const System::vecstring & lines) {
