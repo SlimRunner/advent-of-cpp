@@ -13,7 +13,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 4 | [Scratchcards](#day-4) | ⭐⭐ | easy | please pay attention to where you advance your pointers samir |
 | 5 | [If You Give A Seed A Fertilizer](#day-5) | ⭐ | hard |  |
 | 6 | [Wait For It](#day-6) | ⭐⭐ | easy | this was basically a math problem |
-| 7 | [Camel Cards](#day-7) |  |  |  |
+| 7 | [Camel Cards](#day-7) | ⭐ | easy | got tangled in implementation details |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -79,6 +79,9 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 ---
 ### Day 7
 #### Part 1
+* It went decently. I got stuck in the implementation details.
+* I used the fact that the number of unique cards in each hand and its mode identify uniquely every kind of hand. I then created an object that encapsulates the kind of hand, it's hand members, and the bids. I sorted using those members, and then simply traversed the list to get the total.
+
 #### Part 2
 
 <!-- ---
