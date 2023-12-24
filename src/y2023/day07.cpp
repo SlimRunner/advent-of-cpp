@@ -9,7 +9,12 @@
 
 namespace {
 
-enum class CardValues {
+enum class RuleType {
+  NORMAL,
+  JOKER
+};
+
+enum class CardKind {
   JOKER,
   N2,
   N3,
@@ -26,7 +31,7 @@ enum class CardValues {
   A,
 };
 
-enum class HandValues {
+enum class HandKind {
   HIGH_CARD,
   ONE_PAIR,
   TWO_PAIR,
@@ -36,18 +41,19 @@ enum class HandValues {
   FIVE_KIND,
 };
 
-using handOfCards = std::array<CardValues, 5U>;
+using handOfCards = std::array<CardKind, 5U>;
 
-char cardToChar(CardValues cval);
-CardValues charToCard(char chr);
-int cardRank(CardValues cval);
-int handRank(HandValues hand);
-HandValues parseHand(size_t unique, int mode);
-std::string getHandName(HandValues hand);
+char cardToChar(CardKind cval);
+CardKind charToCard(char chr);
+int cardRank(CardKind cval);
+int handRank(HandKind hand);
+HandKind parseHand(size_t unique, int mode);
+// HandKind parseJokeHand(HandKind handKind, uint jokers);
+std::string getHandName(HandKind hand);
 
 struct Hand {
   int bid;
-  HandValues hand;
+  HandKind hand;
   handOfCards cards;
 
   bool operator<(const Hand & rhs) const {
@@ -72,8 +78,8 @@ struct Hand {
   }
 };
 
-void normalRules(const System::vecstring & lines) {
-  using cval = CardValues;
+int getWinnings(const System::vecstring & lines, RuleType rt) {
+  using cval = CardKind;
 
   std::vector<Hand> hands;
 
@@ -87,7 +93,11 @@ void normalRules(const System::vecstring & lines) {
     auto cards = stringBefore(line, ' ');
 
     for (auto const & chr: stringBefore(line, ' ')) {
-      *handIt = charToCard(chr);
+      if (rt == RuleType::JOKER && chr == 'J') {
+        *handIt = charToCard('*');
+      } else {
+        *handIt = charToCard(chr);
+      }
       if (
         auto nthCard = *handIt;
         cardBins.find(nthCard) == cardBins.end()
@@ -120,25 +130,22 @@ void normalRules(const System::vecstring & lines) {
     winnings += hands.at(i).bid * (static_cast<int>(i) + 1);
   }
 
-  std::cout << "P1: " << winnings << std::endl;
+  return winnings;
 }
-
-// void jokerRules(const System::vecstring & lines) {
-  
-// }
 
 void solve(std::string path) {
   FileParser fp(path);
   auto lines = fp.getLines();
 
-  normalRules(lines);
-  // jokerRules(lines);
+  std::cout << "P1: " << getWinnings(lines, RuleType::NORMAL) << std::endl;
 }
 
 [[maybe_unused]]
-char cardToChar(CardValues cval) {
-  using CV = CardValues;
+char cardToChar(CardKind cval) {
+  using CV = CardKind;
   switch (cval) {
+  case CV::JOKER:
+    return '*';
   case CV::N2:
     return '2';
   case CV::N3:
@@ -170,9 +177,11 @@ char cardToChar(CardValues cval) {
   }
 }
 
-CardValues charToCard(char chr) {
-  using CV = CardValues;
+CardKind charToCard(char chr) {
+  using CV = CardKind;
   switch (chr) {
+  case '*':
+    return CV::JOKER;
   case '2':
     return CV::N2;
   case '3':
@@ -204,38 +213,29 @@ CardValues charToCard(char chr) {
   }
 }
 
-int cardRank(CardValues cval) {
+int cardRank(CardKind cval) {
   return static_cast<int>(cval);
 }
 
-int handRank(HandValues hand) {
+int handRank(HandKind hand) {
   return static_cast<int>(hand);
 }
 
-HandValues parseHand(size_t unique, int mode) {
-  // UC: unique cards
-  // LB: largest bin
-  // if UC = 1 and LB = 5 -> Five of a kind
-  // if UC = 2 and LB = 4 -> Four of a kind
-  // if UC = 2 and LB = 3 -> Full house
-  // if UC = 3 and LB = 3 -> Three of a kind
-  // if UC = 3 and LB = 2 -> Two pair
-  // if UC = 4 and LB = 2 -> One pair
-  // if UC = 5 and LB = 1 -> High card
-  if (unique == 1 && mode == 5) {
-    return HandValues::FIVE_KIND;
+HandKind parseHand(size_t unique, int mode) {
+  if        (unique == 1 && mode == 5) {
+    return HandKind::FIVE_KIND;
   } else if (unique == 2 && mode == 4) {
-    return HandValues::FOUR_KIND;
+    return HandKind::FOUR_KIND;
   } else if (unique == 2 && mode == 3) {
-    return HandValues::FULL_HOUSE;
+    return HandKind::FULL_HOUSE;
   } else if (unique == 3 && mode == 3) {
-    return HandValues::THREE_KIND;
+    return HandKind::THREE_KIND;
   } else if (unique == 3 && mode == 2) {
-    return HandValues::TWO_PAIR;
+    return HandKind::TWO_PAIR;
   } else if (unique == 4 && mode == 2) {
-    return HandValues::ONE_PAIR;
+    return HandKind::ONE_PAIR;
   } else if (unique == 5 && mode == 1) {
-    return HandValues::HIGH_CARD;
+    return HandKind::HIGH_CARD;
   } else {
     std::stringstream msg;
     msg << "This configuration is not possible.";
@@ -245,9 +245,14 @@ HandValues parseHand(size_t unique, int mode) {
   }
 }
 
+// HandKind parseJokeHand(HandKind handKind, uint jokers) {
+//   // TODO: do the number of jokers uniquely transform a kind into another one?
+//   // Or do I have to know the cards necessarily?
+// }
+
 [[maybe_unused]]
-std::string getHandName(HandValues hand) {
-  using HV = HandValues;
+std::string getHandName(HandKind hand) {
+  using HV = HandKind;
   switch (hand) {
   case HV::HIGH_CARD:
     return "high card";
