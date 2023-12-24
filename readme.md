@@ -13,6 +13,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 4 | [Scratchcards](#day-4) | ⭐⭐ | easy | please pay attention to where you advance your pointers samir |
 | 5 | [If You Give A Seed A Fertilizer](#day-5) | ⭐ | hard |  |
 | 6 | [Wait For It](#day-6) | ⭐⭐ | easy | this was basically a math problem |
+| 7 | [Camel Cards](#day-7) |  |  |  |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -74,6 +75,11 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 #### Part 2
 * It went smoothly.
 * I added an alternative parsing to ignore spaces and repeated the same process from 1. Runs in O(1).
+
+---
+### Day 7
+#### Part 1
+#### Part 2
 
 <!-- ---
 ### Day \#
