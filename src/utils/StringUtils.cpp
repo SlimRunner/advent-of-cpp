@@ -15,7 +15,7 @@ std::string stringBetween(const std::string & src, char start, char end) {
 
 std::string stringBefore(const std::string & src, char end) {
   size_t p1;
-  p1 = src.find(end) - 1;
+  p1 = src.find(end);
   if (p1 == src.npos || p1 <= 0) {
     return std::string{};
   } else {
