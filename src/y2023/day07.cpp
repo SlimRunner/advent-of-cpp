@@ -1,6 +1,7 @@
 #include "EntryHeaders.hpp"
 #include "StringUtils.hpp"
 #include <algorithm> // sort
+#include <array>
 #include <exception>
 #include <map>
 #include <sstream> // stringstream
@@ -9,6 +10,7 @@
 namespace {
 
 enum class CardValues {
+  JOKER,
   N2,
   N3,
   N4,
@@ -34,6 +36,7 @@ enum class HandValues {
   FIVE_KIND,
 };
 
+using handOfCards = std::array<CardValues, 5U>;
 
 char cardToChar(CardValues cval);
 CardValues charToCard(char chr);
@@ -44,9 +47,8 @@ std::string getHandName(HandValues hand);
 
 struct Hand {
   int bid;
-  CardValues firstCard;
   HandValues hand;
-  std::string cards;
+  handOfCards cards;
 
   bool operator<(const Hand & rhs) const {
     auto h1 = handRank(hand);
@@ -62,7 +64,7 @@ struct Hand {
         ++c1, ++c2
       ) {
         if (*c1 != *c2) {
-          return cardRank(charToCard(*c1)) < cardRank(charToCard(*c2));
+          return cardRank(*c1) < cardRank(*c2);
         }
       }
       throw std::logic_error("Hand kinds should not be ambiguous");
@@ -70,56 +72,67 @@ struct Hand {
   }
 };
 
-void solve(std::string path) {
-  FileParser fp(path);
-  auto lines = fp.getLines();
-
+void normalRules(const System::vecstring & lines) {
   using cval = CardValues;
 
   std::vector<Hand> hands;
 
   for (auto const & line: lines) {
     std::map<cval, int> cardBins;
+
+    handOfCards currentHand;
+    auto handIt = currentHand.begin();
+
     int maxSize = 0;
     auto cards = stringBefore(line, ' ');
+
     for (auto const & chr: stringBefore(line, ' ')) {
+      *handIt = charToCard(chr);
       if (
-        auto thisCard = charToCard(chr);
-        cardBins.find(thisCard) == cardBins.end()
+        auto nthCard = *handIt;
+        cardBins.find(nthCard) == cardBins.end()
       ) {
-        cardBins.emplace(thisCard, 1);
+        cardBins.emplace(nthCard, 1);
         maxSize = maxSize < 1 ? 1 : maxSize;
       } else {
-        auto & here = cardBins.at(thisCard);
+        auto & here = cardBins.at(nthCard);
         ++here;
         maxSize = maxSize < here ? here : maxSize;
       }
-
+      if (handIt == currentHand.end()) {
+        throw std::logic_error("Input was asserted to have only five cards per hand");
+      }
+      ++handIt;
     }
 
     hands.push_back({
       std::stoi(stringAfter(line, ' ')),
-      charToCard(line.at(0)),
       parseHand(cardBins.size(), maxSize),
-      cards
+      currentHand
     });
   }
   
   int winnings = 0;
   std::sort(hands.begin(), hands.end());
   const size_t HAND_SIZE = hands.size();
-  // std::cout << "There are " << HAND_SIZE << " hands" << std::endl;
+  
   for (size_t i = 0; i < HAND_SIZE; ++i) {
-
-    // std::cout << "[" << hands.at(i).cards << "]: ";
-    // std::cout << getHandName(hands.at(i).hand);
-    // std::cout << " with " << cardToChar(hands.at(i).firstCard);
-    // std::cout << " and $" << hands.at(i).bid << " bid" << std::endl;
-
     winnings += hands.at(i).bid * (static_cast<int>(i) + 1);
   }
 
   std::cout << "P1: " << winnings << std::endl;
+}
+
+// void jokerRules(const System::vecstring & lines) {
+  
+// }
+
+void solve(std::string path) {
+  FileParser fp(path);
+  auto lines = fp.getLines();
+
+  normalRules(lines);
+  // jokerRules(lines);
 }
 
 [[maybe_unused]]
