@@ -46,7 +46,7 @@ void solve(std::string path) {
   while (line != EOL) {
     almanac.push_back({});
     while (line != EOL && line->size() > 0) {
-      almanac.back().push_back(parseLLs(stringAfter(*line++, ':')));
+      almanac.back().push_back(parseLLs(*line++));
     }
     while (line != EOL && line->size() == 0) {++line;}
     if (line != EOL) ++line;

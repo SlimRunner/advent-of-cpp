@@ -4,9 +4,9 @@
 
 std::string stringBetween(const std::string & src, char start, char end) {
   size_t p0, p1;
-  p0 = src.find(start) + 1;
-  p1 = src.find(end) - 1;
-  if (p0 == src.npos || p1 == src.npos || p0 >= p1) {
+  p0 = src.find(start);
+  p1 = src.find(end);
+  if (p0++ == src.npos || p1 == src.npos || p0 >= p1) {
     return std::string{};
   } else {
     return src.substr(p0, p1 - p0);
@@ -25,8 +25,8 @@ std::string stringBefore(const std::string & src, char end) {
 
 std::string stringAfter(const std::string & src, char start) {
   size_t p0;
-  p0 = src.find(start) + 1;
-  if (p0 == src.npos || p0 >= src.length()) {
+  p0 = src.find(start);
+  if (p0++ == src.npos || p0 >= src.length()) {
     return std::string{};
   } else {
     return src.substr(p0);
