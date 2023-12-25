@@ -13,7 +13,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 4 | [Scratchcards](#day-4) | ⭐⭐ | easy | please pay attention to where you advance your pointers samir |
 | 5 | [If You Give A Seed A Fertilizer](#day-5) | ⭐ | hard |  |
 | 6 | [Wait For It](#day-6) | ⭐⭐ | easy | this was basically a math problem |
-| 7 | [Camel Cards](#day-7) | ⭐ | easy | got tangled in implementation details |
+| 7 | [Camel Cards](#day-7) | ⭐⭐ | easy | got tangled in implementation details |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
