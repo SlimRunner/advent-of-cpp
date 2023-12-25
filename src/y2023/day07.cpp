@@ -48,7 +48,7 @@ CardKind charToCard(char chr);
 int cardRank(CardKind cval);
 int handRank(HandKind hand);
 HandKind parseHand(size_t unique, int mode);
-// HandKind parseJokeHand(HandKind handKind, uint jokers);
+HandKind parseJokeHand(HandKind handKind, size_t jokers);
 std::string getHandName(HandKind hand);
 
 struct Hand {
@@ -90,15 +90,19 @@ int getWinnings(const System::vecstring & lines, RuleType rt) {
     auto handIt = currentHand.begin();
 
     int maxSize = 0;
+    size_t jokerCount = 0;
     auto cards = stringBefore(line, ' ');
 
-    for (auto const & chr: stringBefore(line, ' ')) {
+    for (auto const & chr: cards) {
       if (rt == RuleType::JOKER && chr == 'J') {
         *handIt = charToCard('*');
       } else {
         *handIt = charToCard(chr);
       }
-      if (
+
+      if (*handIt == CardKind::JOKER) {
+        ++jokerCount;
+      } else if (
         auto nthCard = *handIt;
         cardBins.find(nthCard) == cardBins.end()
       ) {
@@ -115,11 +119,22 @@ int getWinnings(const System::vecstring & lines, RuleType rt) {
       ++handIt;
     }
 
-    hands.push_back({
-      std::stoi(stringAfter(line, ' ')),
-      parseHand(cardBins.size(), maxSize),
-      currentHand
-    });
+    if (rt == RuleType::JOKER) {
+      if (maxSize == 0 && jokerCount == 5) {
+        maxSize = 1;
+      }
+      hands.push_back({
+        std::stoi(stringAfter(line, ' ')),
+        parseJokeHand(parseHand(cardBins.size() + jokerCount, maxSize), jokerCount),
+        currentHand
+      });
+    } else {
+      hands.push_back({
+        std::stoi(stringAfter(line, ' ')),
+        parseHand(cardBins.size(), maxSize),
+        currentHand
+      });
+    }
   }
   
   int winnings = 0;
@@ -138,6 +153,7 @@ void solve(std::string path) {
   auto lines = fp.getLines();
 
   std::cout << "P1: " << getWinnings(lines, RuleType::NORMAL) << std::endl;
+  std::cout << "P2: " << getWinnings(lines, RuleType::JOKER) << std::endl;
 }
 
 [[maybe_unused]]
@@ -245,10 +261,88 @@ HandKind parseHand(size_t unique, int mode) {
   }
 }
 
-// HandKind parseJokeHand(HandKind handKind, uint jokers) {
-//   // TODO: do the number of jokers uniquely transform a kind into another one?
-//   // Or do I have to know the cards necessarily?
-// }
+HandKind parseJokeHand(HandKind handKind, size_t jokers) {
+  // TODO: do the number of jokers uniquely transform a kind into another one?
+  // Or do I have to know the cards necessarily?
+  using HV = HandKind;
+  switch (handKind) {
+  case HV::HIGH_CARD:
+    switch (jokers) {
+    case 0U:
+      return HV::HIGH_CARD;
+    case 1U:
+      return HV::ONE_PAIR;
+    case 2U:
+      return HV::THREE_KIND;
+    case 3U:
+      return HV::FOUR_KIND;
+    case 4U:
+      return HV::FIVE_KIND;
+    case 5U:
+      return HV::FIVE_KIND;
+    default:
+      throw std::invalid_argument("Unexpected number of jokers");
+    }
+  case HV::ONE_PAIR:
+    switch (jokers) {
+    case 0U:
+      return HV::ONE_PAIR;
+    case 1U:
+      return HV::THREE_KIND;
+    case 2U:
+      return HV::FOUR_KIND;
+    case 3U:
+      return HV::FIVE_KIND;
+    default:
+      throw std::invalid_argument("Unexpected number of jokers");
+    }
+  case HV::TWO_PAIR:
+    switch (jokers) {
+    case 0U:
+      return HV::TWO_PAIR;
+    case 1U:
+      return HV::FULL_HOUSE;
+    default:
+      throw std::invalid_argument("Unexpected number of jokers");
+    }
+  case HV::THREE_KIND:
+    switch (jokers) {
+    case 0U:
+      return HV::THREE_KIND;
+    case 1U:
+      return HV::FOUR_KIND;
+    case 2U:
+      return HV::FIVE_KIND;
+    default:
+      throw std::invalid_argument("Unexpected number of jokers");
+    }
+  case HV::FULL_HOUSE:
+    switch (jokers) {
+    case 0U:
+      return HV::FULL_HOUSE;
+    default:
+      throw std::invalid_argument("Unexpected number of jokers");
+    }
+  case HV::FOUR_KIND:
+    switch (jokers) {
+    case 0U:
+      return HV::FOUR_KIND;
+    case 1U:
+      return HV::FIVE_KIND;
+    default:
+      throw std::invalid_argument("Unexpected number of jokers");
+    }
+  case HV::FIVE_KIND:
+    switch (jokers) {
+    case 0U:
+      return HV::FIVE_KIND;
+    default:
+      throw std::invalid_argument("Unexpected number of jokers");
+    }
+  default:
+    throw std::invalid_argument("Received invalid kind of hand");
+  }
+}
 
 [[maybe_unused]]
 std::string getHandName(HandKind hand) {

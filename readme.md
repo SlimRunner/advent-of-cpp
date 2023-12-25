@@ -83,6 +83,8 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 * I used the fact that the number of unique cards in each hand and its mode identify uniquely every kind of hand. I then created an object that encapsulates the kind of hand, it's hand members, and the bids. I sorted using those members, and then simply traversed the list to get the total.
 
 #### Part 2
+* It also went decently. The implementations decisions of part 1 also affected me in part 2.
+* I extended my approach from one by noting that I could assume all jokers were distinct cards. This has the effect that I can still uniquely identify a hand by the non-joker hands and then I can unambiguously decide what's the best choice in a case by case basis what upgrade such hand would have based on the number of jokers. The rest of the program runs exactly the same.
 
 <!-- ---
 ### Day \#
