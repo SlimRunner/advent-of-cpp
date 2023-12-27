@@ -12,5 +12,6 @@ void y2023d04(Solutions & sol);
 void y2023d05(Solutions & sol);
 void y2023d06(Solutions & sol);
 void y2023d07(Solutions & sol);
+void y2023d08(Solutions & sol);
 
 void collectSetups(Solutions & sol);
