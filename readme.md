@@ -14,6 +14,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 5 | [If You Give A Seed A Fertilizer](#day-5) | ⭐⭐ | hard | I need more practice with the STL |
 | 6 | [Wait For It](#day-6) | ⭐⭐ | easy | this was basically a math problem |
 | 7 | [Camel Cards](#day-7) | ⭐⭐ | easy | got tangled in implementation details |
+| 8 | [Haunted Wasteland](#day-8) | ⭐ | medium | got tangled in implementation details |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -85,6 +86,13 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 #### Part 2
 * It also went decently. The implementations decisions of part 1 also affected me in part 2.
 * I extended my approach from one by noting that I could assume all jokers were distinct cards. This has the effect that I can still uniquely identify a hand by the non-joker hands and then I can unambiguously decide what's the best choice in a case by case basis what upgrade such hand would have based on the number of jokers. The rest of the program runs exactly the same.
+
+---
+### Day 8
+#### Part 1
+* It seemed easier in my head.
+* I used an map to take advantage of its tree structure to aggregate all nodes and their connections. For the instructions I used a circular linked list.
+#### Part 2
 
 <!-- ---
 ### Day \#

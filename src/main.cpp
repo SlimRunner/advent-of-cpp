@@ -13,6 +13,6 @@ int main(int argc, char const *argv[]) {
   // sol.runEntry(Year::y2023, Day::d05, PuzzleChoice::RUN_ALL);
   // sol.runEntry(Year::y2023, Day::d06, PuzzleChoice::RUN_ALL);
   // sol.runEntry(Year::y2023, Day::d07, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d08, PuzzleChoice::RUN_ALL_EXAMPLES);
+  sol.runEntry(Year::y2023, Day::d08, PuzzleChoice::RUN_ALL);
   return 0;
 }
