@@ -11,7 +11,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 2 | [Cube Conundrum](#day-2) | ⭐⭐ | easy | be more careful of dangling references |
 | 3 | [Gear Ratios](#day-3) | ⭐⭐ | medium | unfamiliar terrain, used DFS |
 | 4 | [Scratchcards](#day-4) | ⭐⭐ | easy | please pay attention to where you advance your pointers samir |
-| 5 | [If You Give A Seed A Fertilizer](#day-5) | ⭐ | hard |  |
+| 5 | [If You Give A Seed A Fertilizer](#day-5) | ⭐⭐ | hard | I need more practice with the STL |
 | 6 | [Wait For It](#day-6) | ⭐⭐ | easy | this was basically a math problem |
 | 7 | [Camel Cards](#day-7) | ⭐⭐ | easy | got tangled in implementation details |
 
@@ -63,9 +63,9 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 #### Part 1
 * It went smoothly.
 * Simply brute forced the almanac to get the smallest seed value.
-#### Part 2 (missing)
-* Oh boy.
-* I should have realized where this was going when my brute force approach scalated to O(n<sup>3</sup>).
+#### Part 2
+* It was an absolute nightmare, but I am proud of the result. I figured this out thanks to a hint from Fad in the Desmos Discord server. The answer is always obvious in hindsight, but I should have been able to figure this out on my own as there was a similar problem in a previous year. 
+* I had to refactor my whole program. I built sorted ranges from the provided conversion mappings. I then traversed those mappings with the input ranges. The approach here was to create a queue of the ranges. I checked each input range with each mapping range and the overlapping part went into an output array while the part of the seed which landed outside went back to the queue.
 
 ---
 ### Day 6
