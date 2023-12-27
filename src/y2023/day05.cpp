@@ -57,7 +57,7 @@ void solve(std::string path) {
   FileParser fp(path);
   auto const lines = fp.getLines();
   auto line = lines.cbegin();
-  auto const EOL = lines.cend();
+  auto const IN_EOF = lines.cend();
 
   std::vector<std::vector<AlmanacEntry<long long>>> almanac;
 
@@ -65,16 +65,16 @@ void solve(std::string path) {
 
   auto const parameters = parseLLs(stringAfter(*(line++), ':'));
   
-  while (line != EOL && line->size() == 0) {++line;}
-  if (line != EOL) ++line;
+  while (line != IN_EOF && line->size() == 0) {++line;}
+  if (line != IN_EOF) ++line;
   
-  while (line != EOL) {
+  while (line != IN_EOF) {
     almanac.push_back({});
-    while (line != EOL && line->size() > 0) {
+    while (line != IN_EOF && line->size() > 0) {
       almanac.back().push_back(parseLLs(*line++));
     }
-    while (line != EOL && line->size() == 0) {++line;}
-    if (line != EOL) ++line;
+    while (line != IN_EOF && line->size() == 0) {++line;}
+    if (line != IN_EOF) ++line;
   }
 
   // create range mappings
