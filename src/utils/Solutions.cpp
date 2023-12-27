@@ -1,9 +1,11 @@
 #include "Solutions.hpp"
 #include "DailySetup.hpp"
-#include <sstream>
-#include <iostream>
-#include <iomanip>
 #include <exception>
+#include <filesystem>
+#include <iomanip>
+#include <iostream>
+#include <regex>
+#include <sstream>
 
 std::string Solutions::rootPath = "";
 
@@ -54,6 +56,50 @@ void Solutions::addEntry(VoidFunc f, Year y, Day d) {
   mFuncs.insert({{y, d}, f});
 }
 
+static void singleDayInserter(
+    const std::map<std::pair<Year, Day>, VoidFunc>::const_iterator &payload,
+    const std::string &rootPath, const std::string &filename,
+    std::vector<std::pair<VoidFunc, std::string>> &subset) {
+  std::stringstream fullpath;
+
+  auto year = payload->first.first;
+  auto day = payload->first.second;
+  auto functor = payload->second;
+
+  fullpath << rootPath;
+  fullpath << std::setw(0) << static_cast<int>(year) << "/";
+  fullpath << std::setfill('0') << std::setw(2) << std::right;
+  fullpath << static_cast<int>(day) << "/" << filename;
+  subset.push_back({functor, fullpath.str()});
+}
+
+static void multiDayInserter(
+    const std::map<std::pair<Year, Day>, VoidFunc>::const_iterator &payload,
+    const std::string &rootPath, const std::regex & pattern,
+    std::vector<std::pair<VoidFunc, std::string>> &subset) {
+  std::stringstream dirpath;
+
+  auto year = payload->first.first;
+  auto day = payload->first.second;
+  auto functor = payload->second;
+  (void)functor;
+  (void)subset;
+  (void)pattern;
+
+  dirpath << rootPath;
+  dirpath << std::setw(0) << static_cast<int>(year) << "/";
+  dirpath << std::setfill('0') << std::setw(2) << std::right;
+  dirpath << static_cast<int>(day);
+
+  // ref: https://stackoverflow.com/a/612176
+  for (const auto &entry :
+       std::filesystem::directory_iterator(dirpath.str())) {
+    if (auto fullpath = entry.path().string(); std::regex_match(fullpath, pattern)) {
+      subset.push_back({functor, fullpath});
+    }
+  }
+}
+
 bool Solutions::runEntry(Year year, Day day, PuzzleChoice pc) const {
   // pc has default of RUN_INPUT
 
@@ -61,37 +107,39 @@ bool Solutions::runEntry(Year year, Day day, PuzzleChoice pc) const {
   // case PuzzleChoice::$1:\n    break;
 
   std::vector<std::pair<VoidFunc, std::string>> subset;
-  std::stringstream fullpath;
 
   switch (pc) {
   case PuzzleChoice::RUN_ALL:
+    if (auto it = mFuncs.find({year, day}); it != mFuncs.end()) {
+      const std::regex rxPuzzles(".+(?:in|ex).txt$");
+      multiDayInserter(it, rootPath, rxPuzzles, subset);
+    }
     break;
+
   case PuzzleChoice::RUN_INPUT:
     if (auto it = mFuncs.find({year, day}); it != mFuncs.end()) {
-      fullpath.clear();
-      fullpath.str("");
-      fullpath << rootPath;
-      fullpath << std::setw(0) << static_cast<int>(year) << "/";
-      fullpath << std::setfill('0') << std::setw(2);
-      fullpath << static_cast<int>(day) << "/data.in.txt";
-      subset.push_back({it->second, fullpath.str()});
+      singleDayInserter(it, rootPath, "data.in.txt", subset);
     }
-    
     break;
+
   case PuzzleChoice::RUN_ALL_INPUTS:
+    if (auto it = mFuncs.find({year, day}); it != mFuncs.end()) {
+      const std::regex rxPuzzles(".+in.txt$");
+      multiDayInserter(it, rootPath, rxPuzzles, subset);
+    }
     break;
+
   case PuzzleChoice::RUN_EXAMPLE:
     if (auto it = mFuncs.find({year, day}); it != mFuncs.end()) {
-      fullpath.clear();
-      fullpath.str("");
-      fullpath << rootPath;
-      fullpath << std::setw(0) << static_cast<int>(year) << "/";
-      fullpath << std::setfill('0') << std::setw(2) << std::right;
-      fullpath << static_cast<int>(day) << "/data.ex.txt";
-      subset.push_back({it->second, fullpath.str()});
+      singleDayInserter(it, rootPath, "data.ex.txt", subset);
     }
     break;
+
   case PuzzleChoice::RUN_ALL_EXAMPLES:
+    if (auto it = mFuncs.find({year, day}); it != mFuncs.end()) {
+      const std::regex rxPuzzles(".+ex.txt$");
+      multiDayInserter(it, rootPath, rxPuzzles, subset);
+    }
     break;
   default:
     break;
@@ -106,7 +154,7 @@ bool Solutions::runEntry(Year year, Day day, PuzzleChoice pc) const {
   for (auto const& fset: subset) {
     std::cout << "File: " << fset.second << std::endl;
     fset.first(fset.second);
+    std::cout << std::endl;
   }
-  std::cout << std::endl;
   return !subset.empty();
 }
