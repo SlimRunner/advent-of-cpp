@@ -84,11 +84,8 @@ struct LinkedList {
   LinkedList * next;
 };
 
-void solve(std::string path) {
+size_t countSteps(const System::vecstring & lines) {
   using FStr = FixedString<3>;
-
-  FileParser fp(path);
-  auto const lines = fp.getLines();
   auto line = lines.cbegin();
 
   std::map<FStr, std::pair<FStr, FStr>> graph;
@@ -121,18 +118,29 @@ void solve(std::string path) {
       here.view().compare(END_MATCH);
       here = chooseNode(graph.at(here), nextRule->data),
       ++steps, nextRule = nextRule->next
-    ) {
-
-    }
+    ) { }
   }
-
-  std::cout << "P1: " << steps << std::endl;
 
   for (
     LinkedList<NodeChoice> * ruleIt = leadRule.next, * delIt = nullptr;
     ruleIt != nullptr && ruleIt != &leadRule;
     delIt = ruleIt, ruleIt = ruleIt->next, delete delIt
   ) { }
+
+  return steps;
+}
+
+void solve(std::string path) {
+  FileParser fp(path);
+  auto const lines = fp.getLines();
+
+  if (path.find("-p2") == path.npos) {
+    std::cout << "P1: " << countSteps(lines) << std::endl;
+  } else {
+    std::cout << "P1: incompatible input [SKIPPED]" << std::endl;
+  }
+
+  // std::cout << "P2: " << countMultiSteps(lines) << std::endl;
 }
 
 } // anon namespace
