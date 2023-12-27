@@ -15,3 +15,4 @@ std::vector<long long> parseLLs(const std::string & src);
 std::vector<long long> parseLLs(const std::string & src, char skipChar);
 
 std::vector<std::string> parseWords(const std::string & src);
+std::vector<std::string> parseWordNums(const std::string & src);
