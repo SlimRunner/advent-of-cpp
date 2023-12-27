@@ -34,6 +34,31 @@ std::string stringAfter(const std::string & src, char start) {
 }
 
 template <typename T>
+std::vector<T> parseChars(const std::string & src) {
+  std::vector<T> result;
+  std::stringstream buffer;
+  bool enableBuffer = false;
+  
+  for (auto const & chr: src) {
+    if (std::isalpha(chr)) {
+      buffer << chr;
+      enableBuffer = true;
+    } else if (enableBuffer) {
+      result.push_back(buffer.str());
+      buffer.clear();
+      buffer.str("");
+      enableBuffer = false;
+    }
+  }
+
+  if (enableBuffer) {
+    result.push_back(buffer.str());
+  }
+
+  return result;
+}
+
+template <typename T>
 std::vector<T> parseNums(const std::string & src, T (*parser)(const std::string &, size_t *, int)) {
   std::vector<T> result;
   std::stringstream buffer;
@@ -105,4 +130,8 @@ std::vector<long long> parseLLs(const std::string & src) {
 
 std::vector<long long> parseLLs(const std::string & src, char skipChar) {
   return parseNums(src, skipChar, std::stoll);
+}
+
+std::vector<std::string> parseWords(const std::string &src) {
+  return parseChars<std::string>(src);
 }
