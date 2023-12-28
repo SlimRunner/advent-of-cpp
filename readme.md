@@ -14,7 +14,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 5 | [If You Give A Seed A Fertilizer](#day-5) | ⭐⭐ | hard | I need more practice with the STL |
 | 6 | [Wait For It](#day-6) | ⭐⭐ | easy | this was basically a math problem |
 | 7 | [Camel Cards](#day-7) | ⭐⭐ | easy | got tangled in implementation details |
-| 8 | [Haunted Wasteland](#day-8) | ⭐ | medium | got tangled in implementation details |
+| 8 | [Haunted Wasteland](#day-8) | ⭐⭐ | medium | got tangled in implementation details |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -93,7 +93,8 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 * It seemed easier in my head.
 * I used an map to take advantage of its tree structure to aggregate all nodes and their connections. For the instructions I used a circular linked list.
 #### Part 2
-
+* It was fairly easy.
+* I first tried to naively run the same code from part one for all branches because I underestimated the exploration size of the puzzle. It was not going to happen in this life, but I quickly realize I could simply compute the lcm of the cycle of each path.
 <!-- ---
 ### Day \#
 #### Part 1

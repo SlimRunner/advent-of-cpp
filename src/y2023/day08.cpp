@@ -7,6 +7,7 @@
 #include <string_view>
 #include <utility> // pair
 #include <vector>
+#include <numeric> // lcm
 
 namespace {
 
@@ -84,6 +85,11 @@ struct LinkedList {
   LinkedList * next;
 };
 
+struct BranchChecker {
+  size_t cycleSize;
+  bool isDone;
+};
+
 size_t countSteps(const System::vecstring & lines) {
   using FStr = FixedString<3>;
   auto line = lines.cbegin();
@@ -130,6 +136,79 @@ size_t countSteps(const System::vecstring & lines) {
   return steps;
 }
 
+size_t countMultiSteps(const System::vecstring & lines) {
+  using FStr = FixedString<3>;
+  auto line = lines.cbegin();
+
+  std::map<FStr, std::pair<FStr, FStr>> graph;
+
+  std::vector<char> strRules(line->cbegin(), line->cend());
+  LinkedList<NodeChoice> leadRule = {parseChoice(strRules.at(0)), nullptr};
+  LinkedList<NodeChoice> * nextRule = &leadRule;
+  for (
+    auto ruleIt = strRules.cbegin() + 1;
+    ruleIt != strRules.cend(); ++ruleIt
+  ) {
+    nextRule->next = new LinkedList<NodeChoice>{parseChoice(*ruleIt), nullptr};
+    nextRule = nextRule->next;
+  }
+  nextRule->next = &leadRule;
+  line += 2;
+
+  for (; line != lines.cend(); ++line) {
+    auto tokens = parseWordNums(*line);
+    graph.insert({tokens.at(0), {tokens.at(1), tokens.at(2)}});
+  }
+
+  constexpr char const BEG_MATCH = 'A';
+  constexpr char const END_MATCH = 'Z';
+
+  std::vector<std::pair<FStr, BranchChecker>> branches;
+  std::map<FStr, BranchChecker> multiSteps;
+
+  for (auto const & node: graph) {
+    if (node.first.view().back() == BEG_MATCH) {
+      branches.push_back({node.first, {0, false}});
+    }
+  }
+
+  const size_t MAX_GOALS = branches.size();
+  size_t goalCount = 0;
+
+  for (
+    auto thisRule = &leadRule;
+    goalCount < MAX_GOALS;
+    thisRule = thisRule->next
+  ) {
+    for (auto && branch: branches) {
+      if (branch.second.isDone) {
+        continue;
+      }
+
+      branch.first = chooseNode(graph.at(branch.first), thisRule->data);
+      ++(branch.second.cycleSize);
+      branch.second.isDone = branch.first.view().back() == END_MATCH;
+      if (branch.second.isDone) {
+        ++goalCount;
+      }
+    }
+  }
+
+  size_t steps = 1;
+
+  for (auto const & branch: branches) {
+    steps = std::lcm(steps, branch.second.cycleSize);
+  }
+
+  for (
+    LinkedList<NodeChoice> * ruleIt = leadRule.next, * delIt = nullptr;
+    ruleIt != nullptr && ruleIt != &leadRule;
+    delIt = ruleIt, ruleIt = ruleIt->next, delete delIt
+  ) { }
+
+  return steps;
+}
+
 void solve(std::string path) {
   FileParser fp(path);
   auto const lines = fp.getLines();
@@ -140,7 +219,7 @@ void solve(std::string path) {
     std::cout << "P1: incompatible input [SKIPPED]" << std::endl;
   }
 
-  // std::cout << "P2: " << countMultiSteps(lines) << std::endl;
+  std::cout << "P2: " << countMultiSteps(lines) << std::endl;
 }
 
 } // anon namespace
