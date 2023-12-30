@@ -15,6 +15,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 6 | [Wait For It](#day-6) | ⭐⭐ | easy | this was basically a math problem |
 | 7 | [Camel Cards](#day-7) | ⭐⭐ | easy | got tangled in implementation details |
 | 8 | [Haunted Wasteland](#day-8) | ⭐⭐ | medium | got tangled in implementation details |
+| 9 | [Mirage Maintenance](#day-9) | ⭐ | medium | overcompensated for part 2 |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -95,6 +96,14 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 #### Part 2
 * It was fairly easy.
 * I first tried to naively run the same code from part one for all branches because I underestimated the exploration size of the puzzle. It was not going to happen in this life, but I quickly realize I could simply compute the lcm of the cycle of each path.
+
+---
+### Day 9
+#### Part 1
+* It was fairly easy.
+* I avoided writing a naive implementation. I instead set out to use newton calculus to compute the extrapolated value. Initially I tried to make the search stop once the difference of two zeroes is found. This proved very annoying because apparently a correct sequence violates this assertion while the search hasn't yet found the 0 terms. As soon as I got rid of that rule, my program output the answer.
+#### Part 2
+
 <!-- ---
 ### Day \#
 #### Part 1
