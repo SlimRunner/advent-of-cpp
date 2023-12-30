@@ -63,6 +63,7 @@ std::vector<T> parseNums(const std::string & src, T (*parser)(const std::string 
   std::vector<T> result;
   std::stringstream buffer;
   bool enableBuffer = false;
+
   
   for (auto const & chr: src) {
     if (std::isdigit(chr)) {
@@ -73,6 +74,9 @@ std::vector<T> parseNums(const std::string & src, T (*parser)(const std::string 
       buffer.clear();
       buffer.str("");
       enableBuffer = false;
+    } else if (chr == '-') {
+      buffer << chr;
+      enableBuffer = true;
     }
   }
 
@@ -98,6 +102,9 @@ std::vector<T> parseNums(const std::string & src, char skipChar, T (*parser)(con
       buffer.clear();
       buffer.str("");
       enableBuffer = false;
+    } else if (chr != skipChar && chr == '-') {
+      buffer << chr;
+      enableBuffer = true;
     }
   }
 
