@@ -12,4 +12,5 @@ void collectSetups(Solutions & sol) {
   y2023d06(sol);
   y2023d07(sol);
   y2023d08(sol);
+  y2023d09(sol);
 }
