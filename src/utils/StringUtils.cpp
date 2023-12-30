@@ -5,6 +5,9 @@
 using funcInt2Int = int (*)(int);
 using funcInt2IntNoEx = int (*)(int) noexcept(true);
 
+template <class T>
+using funcStringParse = T (*)(const std::string &, size_t *, int);
+
 #if defined _WIN64 || defined _WIN32
 static funcInt2IntNoEx exceptify(funcInt2Int discriminator) {
   return reinterpret_cast<funcInt2IntNoEx>(discriminator);
@@ -72,7 +75,7 @@ std::vector<T> parseChars(const std::string & src, funcInt2IntNoEx discriminator
 }
 
 template <typename T>
-std::vector<T> parseNums(const std::string & src, T (*parser)(const std::string &, size_t *, int)) {
+std::vector<T> parseNums(const std::string & src, funcStringParse<T> parser) {
   std::vector<T> result;
   std::stringstream buffer;
   bool enableBuffer = false;
@@ -100,7 +103,7 @@ std::vector<T> parseNums(const std::string & src, T (*parser)(const std::string 
 }
 
 template <typename T>
-std::vector<T> parseNums(const std::string & src, char skipChar, T (*parser)(const std::string &, size_t *, int)) {
+std::vector<T> parseNums(const std::string & src, char skipChar, funcStringParse<T> parser) {
   std::vector<T> result;
   std::stringstream buffer;
   bool enableBuffer = false;
