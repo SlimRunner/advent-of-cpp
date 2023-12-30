@@ -69,17 +69,17 @@ void solve(std::string path) {
   FileParser fp(path);
   auto lines = fp.getLines();
 
-  long long sumOfGuesses = 0;
+  long long guessOfNext = 0;
 
   for (auto const & line: lines) {
     auto nums = parseLLs(line);
     auto terms = findDiffTerms(nums);
     const size_t NTH_TERM = nums.size();
     long long nextInSeq = newtNCR(terms, static_cast<long long>(NTH_TERM));
-    sumOfGuesses += nextInSeq;
+    guessOfNext += nextInSeq;
   }
   
-  std::cout << "P1: " << sumOfGuesses << std::endl;
+  std::cout << "P1: " << guessOfNext << std::endl;
 
   // 1992284165 too low
   // 
