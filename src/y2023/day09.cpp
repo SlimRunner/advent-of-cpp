@@ -84,9 +84,6 @@ void solve(std::string path) {
   
   std::cout << "P1: " << guessOfNext << std::endl;
   std::cout << "P2: " << guessOfPast << std::endl;
-
-  // 1992284165 too low
-  // 
 }
 
 } // anon namespace
