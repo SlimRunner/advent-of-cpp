@@ -15,7 +15,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 6 | [Wait For It](#day-6) | ⭐⭐ | easy | this was basically a math problem |
 | 7 | [Camel Cards](#day-7) | ⭐⭐ | easy | got tangled in implementation details |
 | 8 | [Haunted Wasteland](#day-8) | ⭐⭐ | medium | got tangled in implementation details |
-| 9 | [Mirage Maintenance](#day-9) | ⭐ | medium | overcompensated for part 2 |
+| 9 | [Mirage Maintenance](#day-9) | ⭐⭐ | medium | overcompensated for part 2 |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -103,6 +103,8 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 * It was fairly easy.
 * I avoided writing a naive implementation. I instead set out to use newton calculus to compute the extrapolated value. Initially I tried to make the search stop once the difference of two zeroes is found. This proved very annoying because apparently a correct sequence violates this assertion while the search hasn't yet found the 0 terms. As soon as I got rid of that rule, my program output the answer.
 #### Part 2
+* It was extremely easy.
+* I overshot while coding for part 1. As a result I simply added four lines to compute part 2. Since I had the terms needed to build the polynomial of each line I simple called that function with -1 and accumulated the results.
 
 <!-- ---
 ### Day \#
