@@ -2,6 +2,19 @@
 
 #include <sstream>
 
+using funcInt2Int = int (*)(int);
+using funcInt2IntNoEx = int (*)(int) noexcept(true);
+
+#if defined _WIN64 || defined _WIN32
+static funcInt2IntNoEx exceptify(funcInt2Int discriminator) {
+  return reinterpret_cast<funcInt2IntNoEx>(discriminator);
+}
+#elif defined __linux__
+static funcInt2IntNoEx exceptify(funcInt2IntNoEx discriminator) {
+  return discriminator;
+}
+#endif
+
 std::string stringBetween(const std::string & src, char start, char end) {
   size_t p0, p1;
   p0 = src.find(start);
@@ -34,7 +47,7 @@ std::string stringAfter(const std::string & src, char start) {
 }
 
 template <typename T>
-std::vector<T> parseChars(const std::string & src, int (*discriminator)(int) noexcept(true)) {
+std::vector<T> parseChars(const std::string & src, funcInt2IntNoEx discriminator) {
   std::vector<T> result;
   std::stringstream buffer;
   bool enableBuffer = false;
@@ -64,7 +77,6 @@ std::vector<T> parseNums(const std::string & src, T (*parser)(const std::string 
   std::stringstream buffer;
   bool enableBuffer = false;
 
-  
   for (auto const & chr: src) {
     if (std::isdigit(chr)) {
       buffer << chr;
@@ -140,9 +152,9 @@ std::vector<long long> parseLLs(const std::string & src, char skipChar) {
 }
 
 std::vector<std::string> parseWords(const std::string &src) {
-  return parseChars<std::string>(src, std::isalpha);
+  return parseChars<std::string>(src, exceptify(std::isalpha));
 }
 
 std::vector<std::string> parseWordNums(const std::string &src) {
-  return parseChars<std::string>(src, std::isalnum);
+  return parseChars<std::string>(src, exceptify(std::isalnum));
 }
