@@ -49,7 +49,7 @@ std::string stringAfter(const std::string & src, char start) {
   }
 }
 
-template <typename T>
+template <class T>
 std::vector<T> parseChars(const std::string & src, funcInt2IntNoEx discriminator) {
   std::vector<T> result;
   std::stringstream buffer;
@@ -74,7 +74,7 @@ std::vector<T> parseChars(const std::string & src, funcInt2IntNoEx discriminator
   return result;
 }
 
-template <typename T>
+template <class T>
 std::vector<T> parseNums(const std::string & src, funcStringParse<T> parser) {
   std::vector<T> result;
   std::stringstream buffer;
@@ -102,7 +102,7 @@ std::vector<T> parseNums(const std::string & src, funcStringParse<T> parser) {
   return result;
 }
 
-template <typename T>
+template <class T>
 std::vector<T> parseNums(const std::string & src, char skipChar, funcStringParse<T> parser) {
   std::vector<T> result;
   std::stringstream buffer;

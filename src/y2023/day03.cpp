@@ -50,12 +50,12 @@ Grid operator-(const Grid &lhs, const Grid &rhs) {
   return result;
 }
 
-template <typename T, typename U>
+template <class T, class U>
 T At(std::vector<std::vector<T>> &vec, U y, U x) {
   return vec.at(static_cast<size_t>(y)).at(static_cast<size_t>(x));
 }
 
-template <typename T>
+template <class T>
 T At(std::vector<std::vector<T>> &vec, Grid pt) {
   return vec.at(static_cast<size_t>(pt.row)).at(static_cast<size_t>(pt.col));
 }

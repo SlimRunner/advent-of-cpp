@@ -33,7 +33,7 @@ NodeChoice parseChoice(char chr) {
   }
 }
 
-template <typename T>
+template <class T>
 T chooseNode(std::pair<T, T> p, NodeChoice nc) {
   switch (nc) {
   case NodeChoice::LEFT:
@@ -79,7 +79,7 @@ public:
   }
 };
 
-template <typename T>
+template <class T>
 struct LinkedList {
   T data;
   LinkedList * next;

@@ -6,7 +6,7 @@
 
 namespace {
 
-template <typename T>
+template <class T>
 struct Race {
   T time;
   T dist;

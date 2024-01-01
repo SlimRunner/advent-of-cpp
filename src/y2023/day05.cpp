@@ -15,7 +15,7 @@ enum class RangeJoinType {
   OVERLAP_THRU
 };
 
-template <typename T>
+template <class T>
 struct Range {
   T from;
   T to;
@@ -26,12 +26,12 @@ struct Range {
   inline bool operator <= (const Range<T> & rhs);
 };
 
-template <typename T>
+template <class T>
 struct RangedOffset: public Range<T> {
   T offset;
 };
 
-template <typename T>
+template <class T>
 struct AlmanacEntry {
   T destStart;
   T sourceStart;
@@ -41,15 +41,15 @@ struct AlmanacEntry {
   RangedOffset<T> getRange() const;
 };
 
-template <typename T>
+template <class T>
 std::vector<RangedOffset<T>>
 getRangeMap(const std::vector<AlmanacEntry<T>> &maps);
-template <typename T>
+template <class T>
 std::vector<std::vector<RangedOffset<T>>>
 getAlmanacMap(const std::vector<std::vector<AlmanacEntry<T>>> &almanac);
-template <typename T>
+template <class T>
 void remapValues(const std::vector<RangedOffset<T>> &map, std::vector<T> &out);
-template <typename T>
+template <class T>
 std::vector<Range<T>> remapRanges(const std::vector<RangedOffset<T>> &map,
                                   const std::vector<Range<T>> &src);
 
@@ -129,12 +129,12 @@ void solve(std::string path) {
   std::cout << "P2: " << lowestLoc << std::endl;
 }
 
-template <typename T>
+template <class T>
 bool Range<T>::probeRange(T value) const {
   return from <= value && value <= to;
 }
 
-template <typename T>
+template <class T>
 RangeJoinType Range<T>::compareRanges(const Range<T> &rhs) const {
   // this: (), rhs <>
   // front () back
@@ -157,17 +157,17 @@ RangeJoinType Range<T>::compareRanges(const Range<T> &rhs) const {
   }
 }
 
-template <typename T>
+template <class T>
 inline bool Range<T>::operator<(const Range<T> &rhs) {
   return this->from < rhs.from;
 }
 
-template <typename T>
+template <class T>
 inline bool Range<T>::operator<=(const Range<T> &rhs) {
   return this->from <= rhs.from;
 }
 
-template<typename T>
+template<class T>
 AlmanacEntry<T>::AlmanacEntry(std::vector<T> values) {
   if (values.size() != 3) {
     throw std::invalid_argument("An almanac entry must be of size 3.");
@@ -178,7 +178,7 @@ AlmanacEntry<T>::AlmanacEntry(std::vector<T> values) {
   }
 }
 
-template <typename T>
+template <class T>
 RangedOffset<T> AlmanacEntry<T>::getRange() const {
   RangedOffset<T> result;
   result.from = sourceStart;
@@ -187,7 +187,7 @@ RangedOffset<T> AlmanacEntry<T>::getRange() const {
   return result;
 }
 
-template <typename T>
+template <class T>
 std::vector<RangedOffset<T>> getRangeMap(const std::vector<AlmanacEntry<T>> &maps) {
   std::vector<RangedOffset<T>> ranges;
 
@@ -220,7 +220,7 @@ std::vector<RangedOffset<T>> getRangeMap(const std::vector<AlmanacEntry<T>> &map
   return outRanges;
 }
 
-template <typename T>
+template <class T>
 std::vector<std::vector<RangedOffset<T>>>
 getAlmanacMap(const std::vector<std::vector<AlmanacEntry<T>>> &almanac) {
   std::vector<std::vector<RangedOffset<T>>> result;
@@ -231,7 +231,7 @@ getAlmanacMap(const std::vector<std::vector<AlmanacEntry<T>>> &almanac) {
   return result;
 }
 
-template <typename T>
+template <class T>
 void remapValues(const std::vector<RangedOffset<T>> &map, std::vector<T> & out) {
   // if ranges are guranteed to be sorted
   // a binary search would be more effective
@@ -246,7 +246,7 @@ void remapValues(const std::vector<RangedOffset<T>> &map, std::vector<T> & out) 
   }
 }
 
-template <typename T>
+template <class T>
 std::vector<Range<T>> remapRanges(const std::vector<RangedOffset<T>> &map,
                                  const std::vector<Range<T>> &src) {
   //
