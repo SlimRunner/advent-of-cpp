@@ -16,6 +16,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 7 | [Camel Cards](#day-7) | ⭐⭐ | easy | got tangled in implementation details |
 | 8 | [Haunted Wasteland](#day-8) | ⭐⭐ | medium | got tangled in implementation details |
 | 9 | [Mirage Maintenance](#day-9) | ⭐⭐ | medium | overcompensated for part 2 |
+| 10 | [Pipe Maze](#day-10) |  |  |  |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -105,6 +106,11 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 #### Part 2
 * It was extremely easy.
 * I overshot while coding for part 1. As a result I simply added four lines to compute part 2. Since I had the terms needed to build the polynomial of each line I simple called that function with -1 and accumulated the results.
+
+---
+### Day 10
+#### Part 1
+#### Part 2
 
 <!-- ---
 ### Day \#
