@@ -16,7 +16,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 7 | [Camel Cards](#day-7) | ⭐⭐ | easy | got tangled in implementation details |
 | 8 | [Haunted Wasteland](#day-8) | ⭐⭐ | medium | got tangled in implementation details |
 | 9 | [Mirage Maintenance](#day-9) | ⭐⭐ | medium | overcompensated for part 2 |
-| 10 | [Pipe Maze](#day-10) |  |  |  |
+| 10 | [Pipe Maze](#day-10) | ⭐⭐ | hard | it was so clear in my head, yet so muddy in my code |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -110,7 +110,11 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 ---
 ### Day 10
 #### Part 1
+* It should not have been hard, but it took me way too long.
+* I had a clear idea of what to do from the beginning, but I had a really hard time translating it effectively into code. I knew I had to use either DFS or BFS to "find" the loop and count each step in the process. The farthest point has to be exactly half way through because by departing from the two possible paths each path must travese the exact same amount of tiles at the meeting point.
 #### Part 2
+* It was just as difficult as part 1.
+* This time I chose the wrong approach at first. It thought that the winding process to find whether a point is inside a triangle generalized well for simple polygons. It does not work for concave polygons such as the puzzle input. After a long process of trial and error I finally realized that the scanline method was the obvious best way to tackle this problem. That did not go without problems either. I had a hardtime understanding that in order to correctly count intersections on lines which have corners present I had to correctly match consecutive pairs of those joints and if they both had the same vertical component then no intersection happens (the verticals cancel out).
 
 <!-- ---
 ### Day \#
