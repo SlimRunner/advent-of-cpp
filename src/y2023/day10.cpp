@@ -144,7 +144,7 @@ void beautifyPipes(std::string & outLine, char targetChar) {
     insertFrom(outLine, CORN_SE_PIPE);
     break;
   case '.':
-    outLine.push_back(' ');
+    outLine.push_back('*');
     break;
 
   default:
@@ -301,6 +301,7 @@ void solve(std::string path) {
       }
       beautifyPipes(wline, chr);
     }
+    std::cout << wline << std::endl;
   }
 
   auto farthestStepInLoop = meetingStepsInLoop<size_t>(tiles, start);
