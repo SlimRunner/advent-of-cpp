@@ -11,7 +11,7 @@ void solve(std::string path) {
   auto lines = fp.getLines();
 
   // part 1
-  char chr1, chr2;
+  char chr1 = '\0', chr2 = '\0';
   int total1 = 0;
 
   for(auto const & line:lines) {
@@ -41,7 +41,7 @@ void solve(std::string path) {
       "five", "six", "seven", "eight", "nine",
   };
   int total2 = 0;
-  int dig1, dig2;
+  int dig1 = 0, dig2 = 0;
   for (auto const & line:lines) {
     size_t smallest = std::numeric_limits<size_t>::max();
     size_t largest = std::numeric_limits<size_t>::min();
