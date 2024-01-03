@@ -21,7 +21,8 @@ Solutions &Solutions::getInstance() {
 Solutions &Solutions::getInstance(System::ArgParser args) {
   rootPath = "./puzzles/";
   if (args.empty()) {
-    
+    // this cannot happen anymore
+    // the binary path is always added to the ArgParser now
   } else {
     // this should not happen here, but in main
     // if (
@@ -40,7 +41,7 @@ Solutions &Solutions::getInstance(System::ArgParser args) {
 
     if (
       std::string customPath;
-      args.findFirst("p", customPath) || args.findFirst("-path", customPath)
+      args.findFirst("-p", customPath) || args.findFirst("--path", customPath)
     ){
       rootPath = customPath;
     }
