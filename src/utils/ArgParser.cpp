@@ -2,11 +2,11 @@
 
 namespace System {
 ArgParser::ArgParser(int argc, char const *argv[]) :m_args() {
-  if (argc == 1) {
+  if (argc <= 0) {
     return;
   }
   std::string keys = "";
-  vecstring params;
+  vecstring params = {{argv[0]}};
   for (int i = 1; i < argc; ++i) {
     if (argv[i][0] == '-') {
       m_args.emplace(keys, params);
