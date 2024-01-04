@@ -17,6 +17,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 8 | [Haunted Wasteland](#day-8) | ⭐⭐ | medium | got tangled in implementation details |
 | 9 | [Mirage Maintenance](#day-9) | ⭐⭐ | medium | overcompensated for part 2 |
 | 10 | [Pipe Maze](#day-10) | ⭐⭐ | hard | it was so clear in my head, yet so muddy in my code |
+| 11 | [Cosmic Expansion](#day-11) |  |  |  |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -115,6 +116,11 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 #### Part 2
 * It was just as difficult as part 1.
 * This time I chose the wrong approach at first. It thought that the winding process to find whether a point is inside a triangle generalized well for simple polygons. It does not work for concave polygons such as the puzzle input. After a long process of trial and error I finally realized that the scanline method was the obvious best way to tackle this problem. That did not go without problems either. I had a hardtime understanding that in order to correctly count intersections on lines which have corners present I had to correctly match consecutive pairs of those joints and if they both had the same vertical component then no intersection happens (the verticals cancel out).
+
+---
+### Day 11
+#### Part 1
+#### Part 2
 
 <!-- ---
 ### Day \#

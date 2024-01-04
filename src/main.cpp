@@ -12,16 +12,17 @@ int main(int argc, char const *argv[]) {
 
   steady::time_point begin = steady::now();
 
-  sol.runEntry(Year::y2023, Day::d01, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d02, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d03, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d04, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d05, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d06, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d07, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d08, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d09, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d10, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d01, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d02, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d03, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d04, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d05, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d06, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d07, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d08, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d09, PuzzleChoice::RUN_ALL);
+  // sol.runEntry(Year::y2023, Day::d10, PuzzleChoice::RUN_ALL);
+  sol.runEntry(Year::y2023, Day::d11, PuzzleChoice::RUN_EXAMPLE);
 
   steady::time_point end = steady::now();
   std::cout << "Above puzzles ran in ";
