@@ -66,7 +66,9 @@ $(DBG_APP_DIR)/$(TARGET): $(DBG_OBJECTS)
 # -include $(REL_DEPENDENCIES)
 
 # do not interpret these names as files
-.PHONY: all build clean debug release info
+.PHONY:
+	all build clean release info
+	build-debug clean-debug debug info-debug
 
 build:
 	$(call MD,$(call FixPath,$(REL_APP_DIR)))
