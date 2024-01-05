@@ -13,11 +13,13 @@ template <class T>
 struct ShiftedGrid: public Grid<T> {
   T dx, dy;
 
-  T manDist(const ShiftedGrid & other) const {
-    auto ax = this->x + dx;
-    auto ay = this->y + dy;
-    auto bx = other.x + other.dx;
-    auto by = other.y + other.dy;
+  T manDist(const ShiftedGrid & other, T shiftFactor = 2) const {
+    // default is two because the shift is expected to already be 2x
+    shiftFactor = shiftFactor - 1;
+    auto ax = this->x + dx * shiftFactor;
+    auto ay = this->y + dy * shiftFactor;
+    auto bx = other.x + other.dx * shiftFactor;
+    auto by = other.y + other.dy * shiftFactor;
 
     T tx = 0, ty = 0;
 
@@ -94,17 +96,20 @@ void solve(std::string path) {
     }
   }
 
-  size_t sumOfDistances = 0UL;
+  size_t sumOfNaiveDist = 0UL;
+  size_t sumOfHugeDist = 0UL;
 
   for (auto first = galaxies.cbegin(); first != galaxies.cend(); ++first) {
     for (auto second = first; second != galaxies.cend(); ++second) {
       if (first != second) {
-        sumOfDistances += first->second.manDist(second->second);
+        sumOfNaiveDist += first->second.manDist(second->second);
+        sumOfHugeDist += first->second.manDist(second->second, 1000000UL);
       }
     }
   }
 
-  std::cout << "P1: " << sumOfDistances << std::endl;
+  std::cout << "P1: " << sumOfNaiveDist << std::endl;
+  std::cout << "P2: " << sumOfHugeDist << std::endl;
 }
 
 } // anon namespace
