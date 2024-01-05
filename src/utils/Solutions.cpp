@@ -83,9 +83,6 @@ static void multiDayInserter(
   auto year = payload->first.first;
   auto day = payload->first.second;
   auto functor = payload->second;
-  (void)functor;
-  (void)subset;
-  (void)pattern;
 
   dirpath << rootPath;
   dirpath << std::setw(0) << static_cast<int>(year) << "/";

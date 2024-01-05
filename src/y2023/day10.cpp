@@ -339,9 +339,7 @@ void fixStart(std::vector<std::vector<TileType>> & tiles, Grid<size_t> start) {
   ) {
     newStart |= Direction::SOUTH;
   }
-
-  auto foo = static_cast<TileType>(newStart);
-  (void)foo;
+  
   tiles.at(start.y).at(start.x) = static_cast<TileType>(newStart);
 }
 
