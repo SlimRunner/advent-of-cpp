@@ -22,7 +22,7 @@ int main(int argc, char const *argv[]) {
   // sol.runEntry(Year::y2023, Day::d08, PuzzleChoice::RUN_ALL);
   // sol.runEntry(Year::y2023, Day::d09, PuzzleChoice::RUN_ALL);
   // sol.runEntry(Year::y2023, Day::d10, PuzzleChoice::RUN_ALL);
-  sol.runEntry(Year::y2023, Day::d11, PuzzleChoice::RUN_EXAMPLE);
+  sol.runEntry(Year::y2023, Day::d11, PuzzleChoice::RUN_INPUT);
 
   steady::time_point end = steady::now();
   std::cout << "Above puzzles ran in ";

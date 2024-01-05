@@ -17,7 +17,7 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 | 8 | [Haunted Wasteland](#day-8) | ⭐⭐ | medium | got tangled in implementation details |
 | 9 | [Mirage Maintenance](#day-9) | ⭐⭐ | medium | overcompensated for part 2 |
 | 10 | [Pipe Maze](#day-10) | ⭐⭐ | hard | it was so clear in my head, yet so muddy in my code |
-| 11 | [Cosmic Expansion](#day-11) |  |  |  |
+| 11 | [Cosmic Expansion](#day-11) | ⭐ | easy |  |
 
 <!-- | \# | Title | Stars | Difficulty | Quick notes | -->
 
@@ -120,6 +120,8 @@ This setup is slightly cursed. Each day file is run from main and it is "linked"
 ---
 ### Day 11
 #### Part 1
+* It went smoothly.
+* I scanned the field both through x and y individually. In the first pass I stored the galaxies in a map while storing their vertical shift with a running total of empty lines. The second pass simply updated the horizontal shift. Lastly I iterated over all the pairs while adding their distance.
 #### Part 2
 
 <!-- ---
