@@ -53,7 +53,7 @@ $(REL_OBJ_DIR)/%.o: %.cpp
 # release binary
 $(REL_APP_DIR)/$(TARGET): $(REL_OBJECTS)
 	$(call MD,$(call FixPath,$(@D)))
-	$(CXX) $(CXXFLAGS) -o $(call FixPath,$(REL_APP_DIR)/$(TARGET)) $^
+	$(CXX) $(CXXFLAGS) -o $(call FixPath,$(REL_APP_DIR)/$(TARGET)) $(call FixPath,$^)
 
 # debug objects
 $(DBG_OBJ_DIR)/%.o: %.cpp
@@ -63,7 +63,7 @@ $(DBG_OBJ_DIR)/%.o: %.cpp
 # debug binary
 $(DBG_APP_DIR)/$(TARGET): $(DBG_OBJECTS)
 	$(call MD,$(call FixPath,$(@D)))
-	$(CXX) $(CXXFLAGS) -o $(call FixPath,$(DBG_APP_DIR)/$(TARGET)) $^
+	$(CXX) $(CXXFLAGS) -o $(call FixPath,$(DBG_APP_DIR)/$(TARGET)) $(call FixPath,$^)
 
 # only needed if more makefiles are added to this project
 # -include $(REL_DEPENDENCIES)
