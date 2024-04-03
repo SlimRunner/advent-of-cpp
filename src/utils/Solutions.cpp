@@ -7,6 +7,12 @@
 #include <regex>
 #include <sstream>
 
+#if _WIN32
+  constexpr auto SLASH = "\\";
+#else
+  constexpr auto SLASH = "/";
+#endif
+
 std::string Solutions::rootPath = "";
 
 Solutions::Solutions() : mFuncs{} {
@@ -19,7 +25,11 @@ Solutions &Solutions::getInstance() {
 }
 
 Solutions &Solutions::getInstance(System::ArgParser args) {
+#if _WIN32
+  rootPath = ".\\puzzles\\";
+#else
   rootPath = "./puzzles/";
+#endif
   if (args.empty()) {
     // this cannot happen anymore
     // the binary path is always added to the ArgParser now
@@ -68,9 +78,9 @@ static void singleDayInserter(
   auto functor = payload->second;
 
   fullpath << rootPath;
-  fullpath << std::setw(0) << static_cast<int>(year) << "/";
+  fullpath << std::setw(0) << static_cast<int>(year) << SLASH;
   fullpath << std::setfill('0') << std::setw(2) << std::right;
-  fullpath << static_cast<int>(day) << "/" << filename;
+  fullpath << static_cast<int>(day) << SLASH << filename;
   subset.push_back({functor, fullpath.str()});
 }
 
@@ -85,7 +95,7 @@ static void multiDayInserter(
   auto functor = payload->second;
 
   dirpath << rootPath;
-  dirpath << std::setw(0) << static_cast<int>(year) << "/";
+  dirpath << std::setw(0) << static_cast<int>(year) << SLASH;
   dirpath << std::setfill('0') << std::setw(2) << std::right;
   dirpath << static_cast<int>(day);
 
