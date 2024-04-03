@@ -70,8 +70,14 @@ $(DBG_APP_DIR)/$(TARGET): $(DBG_OBJECTS)
 
 # do not interpret these names as files
 .PHONY:
-	all build clean release info
+	all build clean release info run run-debug
 	build-debug clean-debug debug info-debug
+
+run: release
+	$(call FixPath,$(REL_APP_DIR)/$(TARGET))
+
+run-debug: debug
+	$(call FixPath,$(DBG_APP_DIR)/$(TARGET))
 
 build:
 	$(call MD,$(call FixPath,$(REL_APP_DIR)))
