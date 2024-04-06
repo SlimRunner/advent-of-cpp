@@ -73,10 +73,10 @@ $(DBG_APP_DIR)/$(TARGET): $(DBG_OBJECTS)
 	all build clean info run run-debug
 	build-debug clean-debug info-debug
 
-run: release
+run: build
 	$(call FixPath,$(REL_APP_DIR)/$(TARGET))
 
-run-debug: debug
+run-debug: build-debug
 	$(call FixPath,$(DBG_APP_DIR)/$(TARGET))
 
 build: CXXFLAGS += -O2
