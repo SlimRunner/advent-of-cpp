@@ -8,13 +8,13 @@ ifeq ($(detected_OS),Windows)
 	RM = del /Q /S
 	FixPath = $(subst /,\,$1)
 	MD = if not exist $1 mkdir $1
-	FixQuotes = $(subst ",,$1)
+	FixQuotes = $(subst /,\,$(subst ",,$1))
+	EXT = .exe
 endif
 ifeq ($(detected_OS),Linux)
 	RM = rm -rf
- 	FixPath = $1
+	FixPath = $1
 	MD = mkdir -p $1
-	PECHO = echo $1
 	FixQuotes = $1
 endif
 
@@ -29,12 +29,12 @@ DBG_OBJ_DIR := $(call FixPath,$(DEBUG_DIR)/objects)
 DBG_APP_DIR := $(call FixPath,$(DEBUG_DIR)/app)
 REL_OBJ_DIR := $(call FixPath,$(RELEASE_DIR)/objects)
 REL_APP_DIR := $(call FixPath,$(RELEASE_DIR)/app)
-TARGET      := solver
+TARGET      := solver$(EXT)
 INCLUDE     := -I $(call FixPath,include/)
-SRC         :=                								  \
-	$(call FixPath,$(wildcard src/*.cpp))         \
-	$(call FixPath,$(wildcard src/utils/*.cpp))   \
-	$(call FixPath,$(wildcard src/y2023/*.cpp))
+SRC         :=                                  \
+  $(call FixPath,$(wildcard src/*.cpp))         \
+  $(call FixPath,$(wildcard src/utils/*.cpp))   \
+  $(call FixPath,$(wildcard src/y2023/*.cpp))
 
 REL_OBJECTS      := $(SRC:%.cpp=$(REL_OBJ_DIR)/%.o)
 REL_DEPENDENCIES := $(REL_OBJECTS:.o=.d)
@@ -43,7 +43,7 @@ DBG_OBJECTS      := $(SRC:%.cpp=$(DBG_OBJ_DIR)/%.o)
 DBG_DEPENDENCIES := $(DBG_OBJECTS:.o=.d)
 
 # default build
-all: release
+all: build
 
 # release objects
 $(REL_OBJ_DIR)/%.o: %.cpp
@@ -63,15 +63,15 @@ $(DBG_OBJ_DIR)/%.o: %.cpp
 # debug binary
 $(DBG_APP_DIR)/$(TARGET): $(DBG_OBJECTS)
 	$(call MD,$(call FixPath,$(@D)))
-	$(CXX) $(CXXFLAGS) -o $(call FixPath,$(DBG_APP_DIR)/$(TARGET)) $(call FixPath,$^)
+	$(CXX) $(CXXFLAGS) -o $(call FixPath,$@) $(call FixPath,$^)
 
 # only needed if more makefiles are added to this project
 # -include $(REL_DEPENDENCIES)
 
 # do not interpret these names as files
 .PHONY:
-	all build clean release info run run-debug
-	build-debug clean-debug debug info-debug
+	all build clean info run run-debug
+	build-debug clean-debug info-debug
 
 run: release
 	$(call FixPath,$(REL_APP_DIR)/$(TARGET))
@@ -79,19 +79,11 @@ run: release
 run-debug: debug
 	$(call FixPath,$(DBG_APP_DIR)/$(TARGET))
 
-build:
-	$(call MD,$(call FixPath,$(REL_APP_DIR)))
-	$(call MD,$(call FixPath,$(REL_OBJ_DIR)))
+build: CXXFLAGS += -O2
+build: $(REL_APP_DIR)/$(TARGET)
 
-build-debug:
-	$(call MD,$(call FixPath,$(DBG_APP_DIR)))
-	$(call MD,$(call FixPath,$(DBG_OBJ_DIR)))
-
-release: CXXFLAGS += -O2
-release: build $(REL_APP_DIR)/$(TARGET)
-
-debug: CXXFLAGS += -g
-debug: build-debug $(DBG_APP_DIR)/$(TARGET)
+build-debug: CXXFLAGS += -g
+build-debug: $(DBG_APP_DIR)/$(TARGET)
 
 clean:
 	$(RM) $(call FixPath,$(REL_OBJ_DIR)/*)
@@ -102,6 +94,7 @@ clean-debug:
 	$(RM) $(call FixPath,$(DBG_APP_DIR)/*)
 
 info:
+	@echo $(call FixQuotes,"[*] Target:          ${TARGET}")
 	@echo $(call FixQuotes,"[*] Application dir: ${REL_APP_DIR}")
 	@echo $(call FixQuotes,"[*] Objects dir:     ${REL_OBJ_DIR}")
 	@echo $(call FixQuotes,"[*] Sources:         ${SRC}")
@@ -111,6 +104,7 @@ info:
 
 info-debug:
 	@echo $(call FixQuotes,"Debug Information")
+	@echo $(call FixQuotes,"[*] Target:          ${TARGET}")
 	@echo $(call FixQuotes,"[*] Application dir: ${DBG_APP_DIR}")
 	@echo $(call FixQuotes,"[*] Objects dir:     ${DBG_OBJ_DIR}")
 	@echo $(call FixQuotes,"[*] Sources:         ${SRC}")

@@ -4,7 +4,7 @@
 		{
 			"type": "shell",
 			"label": "Debug",
-			"command": "make debug",
+			"command": "make build-debug",
 			"detail": "Compile debug with makefile"
 		},
 		{
