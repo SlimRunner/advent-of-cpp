@@ -19,12 +19,13 @@ Solutions::Solutions() : mFuncs{} {
   collectSetups(*this);
 }
 
-Solutions &Solutions::getInstance() {
+Solutions &Solutions::getInstance(const System::ArgParser &args) {
   static Solutions instance;
+  setupInstance(args);
   return instance;
 }
 
-Solutions &Solutions::getInstance(System::ArgParser args) {
+void Solutions::setupInstance(const System::ArgParser & args) {
 #if _WIN32
   rootPath = ".\\puzzles\\";
 #else
@@ -56,8 +57,6 @@ Solutions &Solutions::getInstance(System::ArgParser args) {
       rootPath = customPath;
     }
   }
-
-  return getInstance();
 }
 
 void Solutions::addEntry(VoidFunc f, Year y, Day d) {

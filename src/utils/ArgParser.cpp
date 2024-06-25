@@ -19,33 +19,32 @@ ArgParser::ArgParser(int argc, char const *argv[]) :m_args() {
   m_args.emplace(keys, params);
 }
 
-std::string ArgParser::findFirst(std::string flag) {
+std::string ArgParser::findFirst(std::string flag) const {
   if (hasFlag(flag)) {
     return m_args.at(flag).front();
   }
   return std::string();
 }
 
-bool ArgParser::findFirst(std::string flag, std::string &out) {
+bool ArgParser::findFirst(std::string flag, std::string &out) const {
   out = findFirst(flag);
-  return m_matched;
+  return hasFlag(flag);
 }
 
-vecstring ArgParser::findParams(std::string flag) {
+vecstring ArgParser::findParams(std::string flag) const {
   if (hasFlag(flag)) {
     return m_args.at(flag);
   }
   return vecstring();
 }
 
-bool ArgParser::findParams(std::string flag, vecstring &out) {
+bool ArgParser::findParams(std::string flag, vecstring &out) const {
   out = findParams(flag);
-  return m_matched;
+  return hasFlag(flag);
 }
 
-bool ArgParser::hasFlag(std::string flag) {
-  m_matched = m_args.find(flag) != m_args.end();
-  return m_matched;
+bool ArgParser::hasFlag(std::string flag) const {
+  return m_args.find(flag) != m_args.end();
 }
 
 } // namespace System
