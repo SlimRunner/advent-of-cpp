@@ -56,7 +56,7 @@ std::vector<T> parseChars(const std::string & src, funcInt2IntNoEx discriminator
   bool enableBuffer = false;
   
   for (auto const & chr: src) {
-    if (discriminator(chr)) {
+    if (discriminator(static_cast<unsigned char>(chr))) {
       buffer << chr;
       enableBuffer = true;
     } else if (enableBuffer) {
